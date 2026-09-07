@@ -1,0 +1,83 @@
+# D+D Collective — website
+
+The public website for D+D Collective, a private charitable foundation working
+toward the restoration of shalom through grants and redemptive investing.
+
+Worked on by Ben and Michele, each with their own Claude. The rules below are
+not preferences — several of them are legal or consent obligations.
+
+## ⚠ This repository is PUBLIC
+
+Anything committed here is world-readable and stays readable in git history even
+after deletion. Before adding a file, assume a stranger will read it.
+
+### Never commit
+
+- **The internal brief** (`private/`, `website-content-brief.html`) — it is
+  headed "Internal · Meeting prep" and carries partner demographics, faith
+  alignment, portfolio return postures and internal notes.
+- **Leadership demographics or faith-alignment classifications of real
+  organizations.** Asking an applicant these on a form is fine and intended;
+  recording them against a named partner is internal screening taxonomy.
+- **Portfolio holdings, return postures, giving levels, or amounts.**
+- **The internal screens:** the conversions exclusion, the investment exclusion
+  screen, the IRS 4944 PRI test, impact stress tests, reference-check criteria.
+  These stay in Supabase or in env config, never in tracked code — committing
+  them as admin logic publishes them.
+- **Secrets.** Never a real key in a tracked file, and never the Supabase
+  secret/service-role key in a `NEXT_PUBLIC_*` variable — that ships it to the
+  browser. Add it with `vercel env add SUPABASE_SERVICE_ROLE_KEY production`,
+  which reads the value from a prompt rather than the command line.
+
+The hard gates that the brief *does* say to make public are fine in code: the
+diverse board/leadership requirement, the post-revenue requirement, and founder
+personal capital.
+
+### Consent is a content rule
+
+No named partner, scholar or grantee ships without their approval, and the
+description should be in their own words. `consentReceivedAt` gates rendering in
+both the data layer and the Supabase row-level-security policy. A row with a
+null consent date must never render.
+
+### Scholarships: 4945(g) approval is pending
+
+The site may describe the scholarship focus and feature alumni. It must not
+carry an application form, a deadline, or "apply now" language for the new
+entity until IRS 4945(g) approval is received.
+
+## Layout
+
+```
+tokens/ styles.css assets/ guidelines/ components/   the design system
+SKILL.md github.md readme.md                          design-system docs
+templates/website-nextjs/                             ← the site that ships
+```
+
+`templates/website-nextjs/` is the production app; Vercel's Root Directory
+points at it. `ui_kits/` (the static click-through prototype, including the
+admin design) is gitignored and stays local — it is the visual reference for
+building the real admin.
+
+## Brand
+
+Production decision, Sept 2026: the app is authoritative.
+
+- `--logo-teal` `#67AFB7` for rules and large marks
+- `--teal-ink` `#23646E` for small type and links (the logo teal fails contrast
+  at body size)
+- `--ink-green` `#12211F` green-black for text
+- **DM Sans** for text, **Newsreader** for display
+- The interface teals (`#4BBFBF` / `#2A8FA8`) remain for the design-system cards
+- Sentence case. No emoji. Institutional "we", never "I". Interpuncts (·) carry
+  metadata. No icons — the system deliberately ships none.
+
+## Working on it
+
+```bash
+cd templates/website-nextjs && npm install && npm run dev
+```
+
+Branch off `main`, open a PR. The site is `noindex` in three places (layout
+metadata, `robots.txt`, and an `X-Robots-Tag` header) until launch — leave that
+in place.

@@ -1,0 +1,38 @@
+:root{
+  --font-sans:'DM Sans',Inter,system-ui,sans-serif;
+  --font-mono:'DM Mono',ui-monospace,SFMono-Regular,monospace;
+
+  --fw-light:300; /* @kind font */
+  --fw-regular:400; /* @kind font */
+  --fw-medium:500; /* @kind font */
+  --fw-semibold:600; /* @kind font */
+  --fw-bold:700; /* @kind font */
+
+  /* Sizes as authored in the source document */
+  --fs-eyebrow:12px;
+  --fs-pill:11.5px;
+  --fs-micro:12px;
+  --fs-meta:14px;
+  --fs-nav:14px;
+  --fs-table:14.5px;
+  --fs-tile:15px;
+  --fs-body:16px;
+  --fs-h3:17px;
+  --fs-quote:18px;
+  --fs-h2:26px;
+  --fs-h1:clamp(30px,4vw,44px); /* @kind font */
+
+  --lh-tight:1.1; /* @kind other */
+  --lh-quote:1.55; /* @kind other */
+  --lh-body:1.6; /* @kind other */
+
+  --ls-h1:-.02em;
+  --ls-h2:-.015em;
+  --ls-brand:.01em;
+  --ls-pill:.03em;
+  --ls-eyebrow:.08em;
+  --ls-label:.06em;
+
+  --measure-prose:68ch; /* @kind spacing */
+  --measure-lede:66ch; /* @kind spacing */
+}

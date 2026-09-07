@@ -1,0 +1,9 @@
+:root{
+  --radius-pill:999px;
+  --radius-note:10px;
+  --radius-tile:12px;
+  --radius-panel:12px;
+  --radius-card:14px;
+  --radius-rule:2px;
+  --radius-circle:50%;
+}

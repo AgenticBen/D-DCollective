@@ -1,0 +1,29 @@
+:root{
+  /* Spacing scale derived from the source document's real values */
+  --space-1:4px;
+  --space-2:6px;
+  --space-3:8px;
+  --space-4:12px;
+  --space-5:14px;
+  --space-6:16px;
+  --space-7:18px;
+  --space-8:20px;
+  --space-9:24px;
+  --space-10:28px;
+  --space-11:40px;
+  --space-12:56px;
+  --space-13:80px;
+
+  /* Composite */
+  --pad-tile:16px 18px;
+  --pad-card:20px 22px;
+  --pad-note:12px 16px;
+  --pad-cell:9px 12px;
+  --pad-head-cell:10px 12px;
+  --gap-grid:14px;
+  --gap-cols:18px;
+  --section-gap:56px;
+
+  --container-max:1040px;
+  --container-pad:40px 28px 80px;
+}

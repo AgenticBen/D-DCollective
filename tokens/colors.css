@@ -1,0 +1,69 @@
+:root{
+  /* Logo palette — sampled from the supplied logo artwork. These two are the
+     authoritative brand colours; the interface teals below come from the
+     content-brief stylesheet and are used for UI text/borders where the softer
+     logo teals would fail contrast. */
+  --logo-teal-light:#A4DBDA;
+  --logo-teal:#67AFB7;
+  --logo-teal-glow:#9FE4E0; /* light-teal value on dark grounds */
+  --grad-brand:linear-gradient(135deg,#A4DBDA 0%,#67AFB7 100%); /* @kind color */
+
+  /* Interface teal — exact values from the brief stylesheet */
+  --teal:#4BBFBF;
+  --teal-deep:#2A8FA8;
+  --teal-mid:#3BADB5;
+  --teal-bright:#4BCECE; /* gradient start only */
+
+  /* Production decision (Sept 2026): templates/website-nextjs is authoritative.
+     It uses --logo-teal for rules and large marks, and --teal-ink below for
+     small type and links, where the softer logo teal fails contrast. The
+     interface teals above remain available to the design-system cards. */
+  --teal-ink:#23646E;      /* logo teal darkened for body-size type and links */
+  --ink-green:#12211F;     /* green-black: the app's text colour and dark ground */
+  --font-display:'Newsreader'; /* serif display face used by the production app */
+
+  /* Ink & neutrals */
+  --ink:#0A0A0A;
+  --slate:#2D3748;
+  --muted:#5B6B78;
+
+  /* Surfaces */
+  --bg:#FFFFFF;
+  --mist:#F0F8F8;
+  --line:#D6E6E8;
+  --card:#FFFFFF;
+
+  /* Signature gradient */
+  --grad:linear-gradient(135deg,#4BCECE 0%,#2A8FA8 100%); /* @kind color */
+
+  /* Caution / advisory — the only non-teal accent in the system */
+  --warn-bg:#FFF6E8;
+  --warn-ink:#8A5A00;
+  --warn-line:#F2D29B;
+
+  /* Semantic aliases */
+  --text-strong:var(--ink);
+  --text-body:var(--slate);
+  --text-muted:var(--muted);
+  --text-accent:var(--teal-deep);
+  --text-on-accent:#FFFFFF;
+  --surface-page:var(--bg);
+  --surface-card:var(--card);
+  --surface-sunken:var(--mist);
+  --border-hairline:var(--line);
+  --border-accent:var(--teal);
+  --focus-ring:var(--teal-deep);
+}
+/* Consumers that want to follow the OS set data-theme="auto" on <html>. */
+@media (prefers-color-scheme:dark){
+  :root[data-theme="auto"]{
+    --ink:#F2F6F7;--slate:#D5DEE3;--muted:#98A8B2;
+    --bg:#0A0A0A;--mist:#101B1D;--line:#22383C;--card:#131F22;
+    --warn-bg:#2A1F0B;--warn-ink:#F2C97A;--warn-line:#5A4212;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#F2F6F7;--slate:#D5DEE3;--muted:#98A8B2;
+  --bg:#0A0A0A;--mist:#101B1D;--line:#22383C;--card:#131F22;
+  --warn-bg:#2A1F0B;--warn-ink:#F2C97A;--warn-line:#5A4212;
+}

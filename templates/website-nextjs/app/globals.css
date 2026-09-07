@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------
+   Palette. Six values, one hue family plus a green-black ink.
+   Replace these six declarations when the logo suite arrives;
+   nothing else in the codebase names a colour.
+   --------------------------------------------------------------- */
+:root {
+  --ink: #12211F;      /* green-black: text, and the ground of the vision spread */
+  --paper: #FFFFFF;    /* the default ground; deliberately not cream */
+  --field: #EDF3F2;    /* pale teal wash: the one alternate surface */
+  --teal: #67AFB7;     /* the logo teal, for rules and large marks */
+  --teal-ink: #23646E; /* the logo teal darkened to carry small type and links */
+  --rule: #C9D9D8;     /* hairline */
+
+  --font-text: 'DM Sans';
+  --font-display: 'Newsreader';
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-text), system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    font-synthesis-weight: none;
+  }
+
+  /* Real focus, visible on every ground. */
+  :focus-visible {
+    outline: 2px solid var(--teal-ink);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  .on-ink :focus-visible { outline-color: var(--teal); }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+  a:hover { text-decoration-color: var(--teal-ink); }
+
+  /* Skip link */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 50;
+    background: var(--ink); color: var(--paper); padding: 0.75rem 1rem;
+  }
+  .skip:focus { left: 0; }
+
+  ::selection { background: var(--field); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

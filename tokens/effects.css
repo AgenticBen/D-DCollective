@@ -1,0 +1,14 @@
+:root{
+  /* The brand is border-led, not shadow-led. One hairline, one gradient hair,
+     and a single soft lift reserved for overlays. */
+  --border-1:1px solid var(--line); /* @kind other */
+  --border-accent-left:3px solid var(--teal); /* @kind other */
+  --rule-height:2px;
+  --rule-width:56px;
+
+  --shadow-none:none;
+  --shadow-overlay:0 12px 32px rgba(10,10,10,.12);
+  --shadow-focus:0 0 0 3px rgba(42,143,168,.28);
+
+  --scrim-teal:rgba(75,191,191,.10);
+}

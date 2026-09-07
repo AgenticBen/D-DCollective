@@ -1,0 +1,37 @@
+# ── This repository is PUBLIC. Nothing below may be committed. ──────────────
+# Internal meeting-prep brief: partner demographics, faith-alignment tags,
+# portfolio return postures, internal screening notes.
+private/
+website-content-brief.html
+
+# Static design prototype and the internal-brief recreation. Both carry real
+# partner names and the internal screening taxonomy. Kept locally as the
+# reference for building the admin; not published.
+ui_kits/
+
+# Raw logo/screenshot uploads.
+uploads/
+
+# Dependency-free static previews with partner rows baked in. Regenerable.
+templates/website-nextjs/preview/
+
+# ── Design-system build artifacts ───────────────────────────────────────────
+_ds_bundle.js
+_ds_manifest.json
+_adherence.oxlintrc.json
+.thumbnail
+
+# ── Secrets ─────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Node / Next / Vercel ────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+.vercel
+*.tsbuildinfo
+
+# ── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store

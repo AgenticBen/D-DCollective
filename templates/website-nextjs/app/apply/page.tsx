@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { title, intro, expectations, grantsBlurb, investmentBlurb } from '@/content/apply.mdx';
+import { title, intro, expectations, grantsBlurb, investmentBlurb } from '@/content/apply';
 
 export const metadata: Metadata = { title: 'Apply — D+D Collective' };
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ValuesList } from '@/components/values-list';
-import { title, intro, fundingIntro, levers, practiceIntro, practices, closing } from '@/content/how-we-work.mdx';
+import { title, intro, fundingIntro, levers, practiceIntro, practices, closing } from '@/content/how-we-work';
 
 export const metadata: Metadata = { title: 'How we work — D+D Collective' };
 

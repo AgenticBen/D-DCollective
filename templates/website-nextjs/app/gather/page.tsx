@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { EntryList } from '@/components/entry-list';
 import { getEvents, getResources, formatEventDate } from '@/lib/data';
-import { title, intro, invitationNote, emptyState, resourcesIntro } from '@/content/gather.mdx';
+import { title, intro, invitationNote, emptyState, resourcesIntro } from '@/content/gather';
 
 export const metadata: Metadata = { title: 'Gather — D+D Collective' };
 

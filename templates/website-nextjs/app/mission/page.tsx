@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { VisionStatement } from '@/components/vision-statement';
 import { ValuesList } from '@/components/values-list';
-import { vision, shalomGloss, missionLine, missionBody, values, closing } from '@/content/mission.mdx';
+import { vision, shalomGloss, missionLine, missionBody, values, closing } from '@/content/mission';
 
 export const metadata: Metadata = { title: 'Mission — D+D Collective' };
 

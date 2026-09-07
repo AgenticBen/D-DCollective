@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { EntryList } from '@/components/entry-list';
 import { getPortfolio, VEHICLE_LABELS, POSTURE_LABELS } from '@/lib/data';
 import { flags } from '@/lib/flags';
-import { title, definition, definitionMore, note } from '@/content/portfolio.mdx';
+import { title, definition, definitionMore, note } from '@/content/portfolio';
 
 export const metadata: Metadata = { title: 'Portfolio — D+D Collective' };
 

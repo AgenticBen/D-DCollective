@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Pathways } from '@/components/pathways';
-import { mission, intro, pathways, fitYes, fitNo } from '@/content/home.mdx';
+import { mission, intro, pathways, fitYes, fitNo } from '@/content/home';
 
 export default function HomePage() {
   return (

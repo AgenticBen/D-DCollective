@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { EntryList } from '@/components/entry-list';
 import { getOrganizationsByRegion } from '@/lib/data';
-import { title, intro, note } from '@/content/changemakers.mdx';
+import { title, intro, note } from '@/content/changemakers';
 
 export const metadata: Metadata = { title: 'Changemakers — D+D Collective' };
 

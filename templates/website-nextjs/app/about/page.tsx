@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { title, body, markers, closing } from '@/content/about.mdx';
+import { title, body, markers, closing } from '@/content/about';
 
 export const metadata: Metadata = { title: 'About — D+D Collective' };
 

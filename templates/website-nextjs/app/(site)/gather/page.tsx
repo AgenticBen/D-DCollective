@@ -3,7 +3,7 @@ export const revalidate = 60;
 import type { Metadata } from 'next';
 import { NextPage } from '@/components/next-page';
 import {
-  ButtonLink, Card, Eyebrow, GradientRule, Note, Pill, SectionHeader
+  Card, Eyebrow, GradientRule, Note, Pill, SectionHeader
 } from '@/components/ds';
 import { getUpcomingEvents, getPastEvents, getResources, formatEventDate, type Event } from '@/lib/data';
 
@@ -33,19 +33,19 @@ function Spotlight({ event }: { event: Event }) {
       }}>
         {formatEventDate(event.date)}{event.location ? ` · ${event.location}` : ''}
       </p>
-      <p style={{ margin: '12px 0 20px', color: 'var(--text-body)', maxWidth: 'var(--measure-lede)' }}>
+      <p style={{ margin: '12px 0 0', color: 'var(--text-body)', maxWidth: 'var(--measure-lede)' }}>
         {event.description}
       </p>
-      <ButtonLink href="/apply">Request an invitation</ButtonLink>
     </section>
   );
 }
 
 /** The row card the design uses for everything after the spotlight. */
 function EventRow({ event, muted = false }: { event: Event; muted?: boolean }) {
+  /* `muted` dims the archive rows; there is no per-row call to action. */
   return (
     <div style={{
-      display: 'grid', gridTemplateColumns: 'minmax(0,220px) minmax(0,1fr) max-content',
+      display: 'grid', gridTemplateColumns: 'minmax(0,220px) minmax(0,1fr)',
       gap: 24, alignItems: 'start', border: 'var(--border-1)',
       borderRadius: 'var(--radius-card)', background: 'var(--surface-card)',
       padding: 'var(--pad-card)', opacity: muted ? 0.75 : 1
@@ -65,10 +65,6 @@ function EventRow({ event, muted = false }: { event: Event; muted?: boolean }) {
           {event.description}
         </p>
       </div>
-      <div style={{ display: 'grid', gap: 10, justifyItems: 'end' }}>
-        {muted ? null : <ButtonLink href="/apply" variant="secondary" size="sm">Request an invitation</ButtonLink>}
-      </div>
-      <NextPage href="/apply" label="Start a conversation" hint="When you are ready" />
     </div>
   );
 }
@@ -139,6 +135,8 @@ export default async function GatherPage() {
           ))}
         </div>
       </div>
+
+      <NextPage href="/apply" label="Start a conversation" hint="When you are ready" />
     </div>
   );
 }

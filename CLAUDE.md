@@ -52,6 +52,12 @@ partner appears on the site only when `is_published` is true AND
 `consent_received_at` is set — enforced by the row-level-security policy, not
 just by app code. Events and resources are D+D's own content and are published.
 
+Events carry a `kind` (Dinner, Book discussion, Convening, Visit). The Events
+page derives all three of its sections from `starts_at`, so nothing needs
+curating: the soonest future event becomes the spotlight, the remaining future
+events fill "Coming up", and anything past falls into the archive, most recent
+first, capped at five.
+
 Pages revalidate every 60 seconds, so publishing a row shows up without a
 redeploy.
 

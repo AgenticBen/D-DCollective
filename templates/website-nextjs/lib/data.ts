@@ -78,6 +78,8 @@ export interface Event {
   location: string;
   description: string;
   url: string | null;
+  /** Dinner, Book discussion, Convening, Visit. */
+  kind: string | null;
 }
 
 export interface Resource {
@@ -142,24 +144,50 @@ export async function getPortfolio(): Promise<PortfolioHolding[]> {
   }));
 }
 
-/** Undated events sort last; past events are not returned. */
-export async function getEvents(now = new Date()): Promise<Event[]> {
+const EVENT_COLUMNS = 'slug,title,starts_at,location,description,link,kind';
+
+type EventRow = {
+  slug: string; title: string; starts_at: string | null; location: string | null;
+  description: string | null; link: string | null; kind: string | null;
+};
+
+const toEvent = (r: EventRow): Event => ({
+  slug: r.slug,
+  title: r.title,
+  date: r.starts_at ? String(r.starts_at).slice(0, 10) : null,
+  location: r.location ?? '',
+  description: r.description ?? '',
+  url: r.link,
+  kind: r.kind
+});
+
+const today = (now: Date) => now.toISOString().slice(0, 10);
+
+/**
+ * Upcoming events, soonest first. Undated events sort last: they are still
+ * ahead of us, we just do not know when. The page spotlights the first of
+ * these and lists the rest.
+ */
+export async function getUpcomingEvents(now = new Date()): Promise<Event[]> {
   if (!supabase) return [];
   const { data } = await supabase
     .from('events')
-    .select('slug,title,starts_at,location,description,link')
+    .select(EVENT_COLUMNS)
     .order('starts_at', { ascending: true, nullsFirst: false });
-  const today = now.toISOString().slice(0, 10);
-  return emptyOnMissingConfig(data)
-    .map((r) => ({
-      slug: r.slug,
-      title: r.title,
-      date: r.starts_at ? String(r.starts_at).slice(0, 10) : null,
-      location: r.location ?? '',
-      description: r.description ?? '',
-      url: r.link
-    }))
-    .filter((e) => !e.date || e.date >= today);
+  const cutoff = today(now);
+  return (data ?? []).map(toEvent).filter((e) => !e.date || e.date >= cutoff);
+}
+
+/** The archive: most recently finished first. */
+export async function getPastEvents(limit = 5, now = new Date()): Promise<Event[]> {
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('events')
+    .select(EVENT_COLUMNS)
+    .lt('starts_at', now.toISOString())
+    .order('starts_at', { ascending: false })
+    .limit(limit);
+  return (data ?? []).map(toEvent);
 }
 
 export async function getResources(): Promise<Resource[]> {

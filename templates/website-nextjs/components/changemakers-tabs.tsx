@@ -1,20 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import { DataTable, Note, Tile } from '@/components/ds';
+import { Note, Tile } from '@/components/ds';
 import { PartnerCard } from '@/components/partner-card';
+import { PortfolioCard } from '@/components/portfolio-card';
 import type { Organization, PortfolioHolding } from '@/lib/data';
 
 const TABS = ['Partners', 'Portfolio', 'Scholars'] as const;
 type Tab = (typeof TABS)[number];
 
-export function ChangemakersTabs({ groups, portfolio, vehicleLabels, initialTab = 'Partners' }: {
+const grid = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+  gap: 'var(--gap-grid)'
+} as const;
+
+export function ChangemakersTabs({
+  groups, portfolio, vehicleLabels, postureLabels, showPosture, isStaff, draftSlugs
+}: {
   groups: Array<{ region: string; label: string; organizations: Organization[] }>;
   portfolio: PortfolioHolding[];
   vehicleLabels: Record<string, string>;
-  initialTab?: Tab;
+  postureLabels: Record<string, string>;
+  showPosture: boolean;
+  isStaff: boolean;
+  draftSlugs: string[];
 }) {
-  const [tab, setTab] = useState<Tab>(initialTab);
+  const [tab, setTab] = useState<Tab>('Partners');
+  const drafts = new Set(draftSlugs);
 
   return (
     <>
@@ -36,16 +49,27 @@ export function ChangemakersTabs({ groups, portfolio, vehicleLabels, initialTab 
           <p style={{ margin: 0, fontSize: 'var(--fs-tile)', color: 'var(--text-muted)', maxWidth: 'var(--measure-lede)' }}>
             Select a card to see what an organization does and where to find them.
           </p>
+
+          {isStaff && drafts.size > 0 ? (
+            <Note label="Staff view:">
+              {drafts.size} of these are drafts — not published, or with no consent recorded. Visitors do not
+              see them. The descriptions are still ours rather than each organization&rsquo;s own words.
+            </Note>
+          ) : null}
+
           {groups.length === 0 ? (
             <Note label="Awaiting content:">
               Partners appear here once each organization has confirmed its own description and given consent.
             </Note>
           ) : null}
+
           {groups.map((group) => (
             <div key={group.region}>
               <h3 style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)', margin: '0 0 12px' }}>{group.label}</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 'var(--gap-grid)' }}>
-                {group.organizations.map((o) => <PartnerCard key={o.slug} partner={o} />)}
+              <div style={grid}>
+                {group.organizations.map((o) => (
+                  <PartnerCard key={o.slug} partner={o} draft={drafts.has(o.slug)} />
+                ))}
               </div>
             </div>
           ))}
@@ -53,19 +77,26 @@ export function ChangemakersTabs({ groups, portfolio, vehicleLabels, initialTab 
       ) : null}
 
       {tab === 'Portfolio' ? (
-        <div>
+        <div style={{ display: 'grid', gap: 18 }}>
+          <p style={{ margin: 0, fontSize: 'var(--fs-tile)', color: 'var(--text-muted)', maxWidth: 'var(--measure-lede)' }}>
+            Philanthropic capital only. Select a card for the cause and how the capital is held.
+          </p>
           {portfolio.length === 0 ? (
-            <Note label="Awaiting content:">
-              The portfolio is published once each holding has been cleared for listing.
-            </Note>
+            <Note label="Awaiting content:">The portfolio is published once each holding has been cleared for listing.</Note>
           ) : (
-            <DataTable
-              columns={['Company / fund', 'Type', 'Geography', 'Cause']}
-              rows={portfolio.map((r) => [r.name, vehicleLabels[r.vehicle] ?? r.vehicle, r.geography, r.cause])}
-            />
+            <div style={grid}>
+              {portfolio.map((h) => (
+                <PortfolioCard
+                  key={h.slug}
+                  holding={h}
+                  vehicleLabel={vehicleLabels[h.vehicle] ?? h.vehicle}
+                  postureLabel={showPosture ? postureLabels[h.returnPosture] : undefined}
+                />
+              ))}
+            </div>
           )}
-          <p style={{ fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', marginTop: 12 }}>
-            Philanthropic capital only. No dollar figures and no return postures published.
+          <p style={{ fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', margin: 0 }}>
+            No dollar figures{showPosture ? '' : ' and no return postures'} published.
           </p>
         </div>
       ) : null}
@@ -77,7 +108,7 @@ export function ChangemakersTabs({ groups, portfolio, vehicleLabels, initialTab 
             <Tile label="Alumni only">Scholars featured here have completed their undergraduate degree and are contributing meaningfully to their community.</Tile>
             <Tile label="Consent">Each scholar approves their own profile and photo before publication.</Tile>
           </div>
-          {/* No application language here: the new entity's IRS 4945(g) approval is still pending. */}
+          {/* No application language: the new entity's IRS 4945(g) approval is still pending. */}
           <Note label="Awaiting content:">
             Alumni profiles are still being compiled from the predecessor foundation&rsquo;s records. This section is
             intentionally left blank rather than filled with placeholder people.

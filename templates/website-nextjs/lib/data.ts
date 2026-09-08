@@ -116,6 +116,60 @@ export async function getOrganizations(region?: Region): Promise<Organization[]>
   }));
 }
 
+/**
+ * The same partners, but read as the signed-in staff member when there is one.
+ *
+ * Anonymous visitors get exactly what the RLS policy allows: published rows
+ * with a real consent date. Staff get every row, so the cards can be reviewed
+ * before anyone has been asked for consent — without faking a consent date or
+ * loosening the policy that protects them. Rows the public cannot see come back
+ * flagged, and the card marks them.
+ */
+export async function getOrganizationsForViewer(): Promise<{
+  groups: Array<{ region: Region; label: string; organizations: Organization[] }>;
+  isStaff: boolean;
+  draftSlugs: Set<string>;
+}> {
+  const { createClient } = await import('@/lib/auth/server');
+  const authed = await createClient();
+  const { data: claimData } = await authed.auth.getClaims();
+  const isStaff = Boolean(claimData?.claims);
+
+  if (!isStaff) {
+    return { groups: await getOrganizationsByRegion(), isStaff: false, draftSlugs: new Set() };
+  }
+
+  const { data } = await authed
+    .from('partners')
+    .select('slug,name,description,region,place,offers,url,logo_url,consent_received_at,is_published')
+    .order('sort_order')
+    .order('name');
+
+  const rows = data ?? [];
+  const draftSlugs = new Set(
+    rows.filter((r) => !r.is_published || !r.consent_received_at).map((r) => r.slug as string)
+  );
+  const all: Organization[] = rows.map((r) => ({
+    slug: r.slug,
+    name: r.name,
+    description: r.description,
+    region: r.region as Region,
+    place: r.place,
+    url: r.url,
+    logoUrl: r.logo_url,
+    offers: r.offers ?? [],
+    consentReceivedAt: r.consent_received_at
+  }));
+
+  const groups = REGION_ORDER.map((region) => ({
+    region,
+    label: REGION_LABELS[region],
+    organizations: all.filter((o) => o.region === region)
+  })).filter((g) => g.organizations.length > 0);
+
+  return { groups, isStaff: true, draftSlugs };
+}
+
 export async function getOrganizationsByRegion(): Promise<Array<{ region: Region; label: string; organizations: Organization[] }>> {
   const all = await getOrganizations();
   return REGION_ORDER.map((region) => ({

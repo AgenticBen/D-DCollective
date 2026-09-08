@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { signOut } from '@/app/admin/actions';
+import { createClient } from '@/lib/auth/server';
 
 export const metadata: Metadata = {
   title: 'Admin — D+D Collective',
@@ -12,7 +13,12 @@ export const metadata: Metadata = {
  * and footer do not appear here. Access is gated in middleware against a
  * validated JWT, server-side — never by conditional rendering here.
  */
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  /* /admin/login renders inside this shell, so the control only belongs here
+     when there is actually a session to end. */
+  const { data } = await (await createClient()).auth.getClaims();
+  const signedIn = Boolean(data?.claims);
+
   return (
     <div className="flex min-h-screen flex-col bg-paper">
       <header className="border-b border-rule">
@@ -25,11 +31,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               Admin
             </span>
           </div>
-          <form action={signOut}>
-            <button type="submit" className="text-[0.9rem] text-accent underline-offset-2 hover:underline">
-              Sign out
-            </button>
-          </form>
+          {signedIn ? (
+            <form action={signOut}>
+              <button type="submit" className="text-[0.9rem] text-accent underline-offset-2 hover:underline">
+                Sign out
+              </button>
+            </form>
+          ) : null}
         </div>
       </header>
       <main id="main" className="flex-1">{children}</main>

@@ -140,12 +140,11 @@ export default function InvestmentFormPage() {
 
   return (
     <>
-      <FormHeader title="Investment pre-qualification">
-        <p className="mt-8 max-w-measure text-body">
-          Four short sections. This is a first gate rather than a data room, and you will hear back only if
-          there is a fit.
-        </p>
-      </FormHeader>
+      <FormHeader
+        eyebrow="Investment survey"
+        title="Investment pre-qualification"
+        lede="Four short sections. This is a first gate rather than a data room, and you will hear back only if there is a fit."
+      />
 
       <SectionProgress sections={SECTIONS.map((s) => s.title)} current={section} />
 

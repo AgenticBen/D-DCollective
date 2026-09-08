@@ -90,21 +90,20 @@ export default function GrantFormPage() {
 
   return (
     <>
-      <FormHeader title="Grant screening">
-        <p className="mt-8 max-w-measure text-body">
-          Ten short answers. This is a first gate rather than an application, and you will hear back only if
-          there is a fit.
-        </p>
-      </FormHeader>
+      <FormHeader
+        eyebrow="Grant survey"
+        title="Grant screening"
+        lede="Ten short answers. This is a first gate rather than an application, and you will hear back only if there is a fit."
+      />
 
-      <form noValidate onSubmit={onSubmit} className="mx-auto max-w-container px-6 pb-20">
+      <form noValidate onSubmit={onSubmit} className="mx-auto w-full max-w-[820px] px-7 pb-20">
         <ErrorSummary ref={summaryRef} items={summary} />
         {state === 'failed' ? <SubmitFailed onRetry={() => setState('editing')} /> : null}
 
         <Honeypot />
 
-        <fieldset className="divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 section-title">The organization</legend>
+        <fieldset className="grid gap-[18px]">
+          <legend className="pb-1" style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)' }}>The organization</legend>
           <TextField name="organizationName" label={LABELS.organizationName} required errors={fieldErrors} />
           <TextField name="primaryContact" label={LABELS.primaryContact} required errors={fieldErrors} />
           <TextField name="email" type="email" label={LABELS.email} required errors={fieldErrors} />
@@ -133,8 +132,8 @@ export default function GrantFormPage() {
           />
         </fieldset>
 
-        <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 section-title">Leadership</legend>
+        <fieldset className="mt-10 grid gap-[18px]">
+          <legend className="pb-1" style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)' }}>Leadership</legend>
           <p className="max-w-measure border-l-2 border-accent bg-mist px-5 py-4 text-body">
             A diverse board and/or leadership team is a hard requirement here, not a preference. If that is
             not yet true of your organization, this is the point to stop.
@@ -172,8 +171,8 @@ export default function GrantFormPage() {
           />
         </fieldset>
 
-        <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 section-title">The work</legend>
+        <fieldset className="mt-10 grid gap-[18px]">
+          <legend className="pb-1" style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)' }}>The work</legend>
           <ChoiceField
             name="geography"
             label={LABELS.geography}
@@ -223,8 +222,8 @@ export default function GrantFormPage() {
           />
         </fieldset>
 
-        <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 section-title">The request</legend>
+        <fieldset className="mt-10 grid gap-[18px]">
+          <legend className="pb-1" style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)' }}>The request</legend>
           <TextField name="requestAmount" label={LABELS.requestAmount} required errors={fieldErrors} />
           <TextAreaField name="requestPurpose" label={LABELS.requestPurpose} hint="What the money would do." required errors={fieldErrors} rows={3} />
           <TextField name="requestTiming" label={LABELS.requestTiming} hint="When you need it, and whether that is movable." required errors={fieldErrors} />

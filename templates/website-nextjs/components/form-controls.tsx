@@ -1,20 +1,43 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, type CSSProperties } from 'react';
+
+/**
+ * Form controls in the design system's shape: an uppercase accent label with a
+ * "· required" suffix, the shared input skin, and the hint sitting under the
+ * control rather than above it. ChoiceGroup options are selectable cards, which
+ * is what makes the long investment survey scannable.
+ */
 
 type FieldErrors = Record<string, string[] | undefined>;
 
-const labelClass = 'block text-[0.95rem] font-medium';
-const hintClass = 'mt-1 block max-w-measure text-[0.9rem] text-muted';
-const controlClass =
-  'mt-3 block w-full max-w-[38rem] rounded-none border border-rule bg-paper px-3 py-2 text-[1rem] text-ink placeholder:text-muted focus:border-accent';
-const errorClass = 'mt-2 block max-w-measure text-[0.9rem] text-ink';
+const inputSkin: CSSProperties = {
+  width: '100%', boxSizing: 'border-box',
+  fontFamily: 'var(--font-sans)', fontSize: 'var(--fs-tile)',
+  color: 'var(--text-strong)', background: 'var(--surface-card)',
+  border: 'var(--border-1)', borderRadius: 'var(--radius-note)',
+  padding: '10px 12px', outline: 'none'
+};
+
+const labelStyle: CSSProperties = {
+  fontSize: 'var(--fs-micro)', fontWeight: 'var(--fw-medium)',
+  letterSpacing: 'var(--ls-label)', textTransform: 'uppercase',
+  color: 'var(--text-accent)'
+};
+
+const hintStyle: CSSProperties = { fontSize: 13, color: 'var(--text-muted)' };
+
+function Required() {
+  return <span style={{ color: 'var(--muted)', letterSpacing: 0 }}> · required</span>;
+}
 
 function ErrorText({ id, messages }: { id: string; messages?: string[] }) {
   if (!messages || messages.length === 0) return null;
   return (
-    <strong id={id} className={errorClass}>
-      <span className="mr-2 border-b border-teal pb-[1px]">Needs attention</span>
+    <strong id={id} style={{ fontSize: 'var(--fs-meta)', color: 'var(--warn-ink)' }}>
+      <span style={{ borderBottom: '1px solid var(--warn-line)', paddingBottom: 1, marginRight: 8 }}>
+        Needs attention
+      </span>
       {messages[0]}
     </strong>
   );
@@ -35,26 +58,22 @@ function useFieldIds(name: string, errors?: FieldErrors) {
   return { messages, errorId, hintId, invalid: Boolean(messages && messages.length) };
 }
 
+const fieldWrap: CSSProperties = { display: 'grid', gap: 6 };
+
 export function TextField({
   name, label, hint, errors, required, type = 'text', placeholder, defaultValue
 }: BaseFieldProps & { type?: string; placeholder?: string; defaultValue?: string }) {
   const { messages, errorId, hintId, invalid } = useFieldIds(name, errors);
   return (
-    <div className="py-5">
-      <label className={labelClass} htmlFor={name}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
-      </label>
-      {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
+    <div style={fieldWrap}>
+      <label style={labelStyle} htmlFor={name}>{label}{required ? <Required /> : null}</label>
       <input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
+        id={name} name={name} type={type} placeholder={placeholder} defaultValue={defaultValue}
         aria-invalid={invalid || undefined}
         aria-describedby={[hint ? hintId : null, invalid ? errorId : null].filter(Boolean).join(' ') || undefined}
-        className={controlClass}
+        style={{ ...inputSkin, borderColor: invalid ? 'var(--warn-line)' : undefined }}
       />
+      {hint ? <div style={hintStyle} id={hintId}>{hint}</div> : null}
       <ErrorText id={errorId} messages={messages} />
     </div>
   );
@@ -65,20 +84,18 @@ export function TextAreaField({
 }: BaseFieldProps & { rows?: number; placeholder?: string }) {
   const { messages, errorId, hintId, invalid } = useFieldIds(name, errors);
   return (
-    <div className="py-5">
-      <label className={labelClass} htmlFor={name}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
-      </label>
-      {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
+    <div style={fieldWrap}>
+      <label style={labelStyle} htmlFor={name}>{label}{required ? <Required /> : null}</label>
       <textarea
-        id={name}
-        name={name}
-        rows={rows}
-        placeholder={placeholder}
+        id={name} name={name} rows={rows} placeholder={placeholder}
         aria-invalid={invalid || undefined}
         aria-describedby={[hint ? hintId : null, invalid ? errorId : null].filter(Boolean).join(' ') || undefined}
-        className={controlClass + ' leading-relaxed'}
+        style={{
+          ...inputSkin, lineHeight: 'var(--lh-body)', resize: 'vertical',
+          borderColor: invalid ? 'var(--warn-line)' : undefined
+        }}
       />
+      {hint ? <div style={hintStyle} id={hintId}>{hint}</div> : null}
       <ErrorText id={errorId} messages={messages} />
     </div>
   );
@@ -87,35 +104,43 @@ export function TextAreaField({
 export type Choice = { value: string; label: string; note?: string };
 
 export function ChoiceField({
-  name, label, hint, errors, required, options, multiple = false
-}: BaseFieldProps & { options: Choice[]; multiple?: boolean }) {
+  name, label, hint, errors, required, options, multiple = false, columns
+}: BaseFieldProps & { options: Choice[]; multiple?: boolean; columns?: number }) {
   const { messages, errorId, hintId, invalid } = useFieldIds(name, errors);
+  /* One column when any option carries a note, otherwise pack them tighter. */
+  const cols = columns ?? (options.some((o) => o.note) ? 1 : Math.min(3, options.length));
+
   return (
     <fieldset
-      className="py-5"
+      style={fieldWrap}
       aria-invalid={invalid || undefined}
       aria-describedby={[hint ? hintId : null, invalid ? errorId : null].filter(Boolean).join(' ') || undefined}
     >
-      <legend className={labelClass}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
-      </legend>
-      {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
-      <div className="mt-3 max-w-[38rem] border-t border-rule">
+      <legend style={labelStyle}>{label}{required ? <Required /> : null}</legend>
+      <div
+        className="grid gap-2"
+        style={{ gridTemplateColumns: `repeat(${cols},minmax(0,1fr))`, marginTop: 2 }}
+      >
         {options.map((o) => (
-          <label key={o.value} className="flex cursor-pointer gap-3 border-b border-rule py-3">
+          <label
+            key={o.value}
+            className="flex cursor-pointer items-start gap-2.5 rounded-note border transition-colors has-[:checked]:border-teal has-[:checked]:bg-mist"
+            style={{ fontSize: 'var(--fs-tile)', padding: '9px 12px', borderColor: 'var(--border-hairline)', background: 'var(--surface-card)' }}
+          >
             <input
               type={multiple ? 'checkbox' : 'radio'}
               name={name}
               value={o.value}
-              className="mt-[0.35rem] h-4 w-4 shrink-0 accent-[var(--teal-deep)]"
+              className="mt-[0.3rem] h-4 w-4 shrink-0 accent-[var(--teal-deep)]"
             />
             <span>
               <span className="block">{o.label}</span>
-              {o.note ? <span className="mt-1 block text-[0.9rem] text-muted">{o.note}</span> : null}
+              {o.note ? <span className="mt-1 block text-[0.85rem] text-muted">{o.note}</span> : null}
             </span>
           </label>
         ))}
       </div>
+      {hint ? <div style={hintStyle} id={hintId}>{hint}</div> : null}
       <ErrorText id={errorId} messages={messages} />
     </fieldset>
   );

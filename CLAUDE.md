@@ -40,6 +40,21 @@ description should be in their own words. `consentReceivedAt` gates rendering in
 both the data layer and the Supabase row-level-security policy. A row with a
 null consent date must never render.
 
+### Publishing content
+
+Content lives in Supabase (project `dd-collective`), not in git. `lib/data.ts`
+holds types and accessors only.
+
+Partners and portfolio holdings are loaded but **unpublished**: the design's own
+source says the descriptions are drafts to be replaced with copy each
+organization writes about itself, and urls stay null until they confirm. A
+partner appears on the site only when `is_published` is true AND
+`consent_received_at` is set — enforced by the row-level-security policy, not
+just by app code. Events and resources are D+D's own content and are published.
+
+Pages revalidate every 60 seconds, so publishing a row shows up without a
+redeploy.
+
 ### Scholarships: 4945(g) approval is pending
 
 The site may describe the scholarship focus and feature alumni. It must not

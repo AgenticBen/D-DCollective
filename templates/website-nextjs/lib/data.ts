@@ -1,6 +1,8 @@
 /**
- * Everything that changes lives behind an async accessor here. Replacing a
- * body with a Supabase query touches this file and nothing else.
+ * Everything that changes lives behind an async accessor here, now backed by
+ * Supabase. Row-level security does the gating: partners are only selectable
+ * when they are published AND carry a consent date, so an unconsented partner
+ * cannot reach the page even if a query forgets to filter.
  *
  * Static prose (mission, values, how we work, about) is NOT here — it lives in
  * MDX under content/.
@@ -11,6 +13,8 @@
  * the site is for the public data layer not to carry it at all. Keep it that
  * way when this moves to Supabase: select the columns listed here, not the row.
  */
+
+import { supabase } from '@/lib/supabase';
 
 export type Region = 'charlotte' | 'east-africa' | 'national-global';
 export type Vehicle = 'fund' | 'direct' | 'pri' | 'angel';
@@ -48,6 +52,8 @@ export interface Organization {
   url: string | null;
   /** Partner-supplied and consented. Null renders no image at all. */
   logoUrl: string | null;
+  /** Short labels for what the organization offers. Shown on the card back. */
+  offers: string[];
   /** ISO 8601 date consent was received. Null means this entry never renders. */
   consentReceivedAt: string | null;
 }
@@ -83,45 +89,29 @@ export interface Resource {
   url: string;
 }
 
-/**
- * TODO(supabase): select from the `organizations` table.
- * Organizations, with their consent dates, live in Supabase. Deliberately empty here: this repository is public, and
- * partner names ship only after consent is recorded. Seed rows are kept
- * out of git in private/seed/data.with-rows.ts.
- */
-const organizations: Organization[] = [];
+const emptyOnMissingConfig = <T,>(rows: T[] | null): T[] => rows ?? [];
 
-/**
- * TODO(supabase): select from the `portfolio` table.
- * Portfolio holdings, including returnPosture, live in Supabase. Deliberately empty here: this repository is public, and
- * partner names ship only after consent is recorded. Seed rows are kept
- * out of git in private/seed/data.with-rows.ts.
- */
-const portfolio: PortfolioHolding[] = [];
-
-/**
- * TODO(supabase): select from the `events` table.
- * Events live in Supabase so Michele can publish them from the admin. Deliberately empty here: this repository is public, and
- * partner names ship only after consent is recorded. Seed rows are kept
- * out of git in private/seed/data.with-rows.ts.
- */
-const events: Event[] = [];
-
-/**
- * TODO(supabase): select from the `resources` table.
- * Resources live in Supabase so Michele can publish them from the admin. Deliberately empty here: this repository is public, and
- * partner names ship only after consent is recorded. Seed rows are kept
- * out of git in private/seed/data.with-rows.ts.
- */
-const resources: Resource[] = [];
-
-const published = <T extends { consentReceivedAt: string | null }>(rows: T[]) =>
-  rows.filter((r) => Boolean(r.consentReceivedAt));
-
-/** Only organizations with a consent date are ever returned. */
+/** Only published organizations with a consent date are ever returned. */
 export async function getOrganizations(region?: Region): Promise<Organization[]> {
-  const rows = published(organizations).filter((o) => !region || o.region === region);
-  return rows.sort((a, b) => a.name.localeCompare(b.name));
+  if (!supabase) return [];
+  let q = supabase
+    .from('partners')
+    .select('slug,name,description,region,place,offers,url,logo_url,consent_received_at')
+    .order('sort_order')
+    .order('name');
+  if (region) q = q.eq('region', region);
+  const { data } = await q;
+  return emptyOnMissingConfig(data).map((r) => ({
+    slug: r.slug,
+    name: r.name,
+    description: r.description,
+    region: r.region as Region,
+    place: r.place,
+    url: r.url,
+    logoUrl: r.logo_url,
+    offers: r.offers ?? [],
+    consentReceivedAt: r.consent_received_at
+  }));
 }
 
 export async function getOrganizationsByRegion(): Promise<Array<{ region: Region; label: string; organizations: Organization[] }>> {
@@ -134,27 +124,62 @@ export async function getOrganizationsByRegion(): Promise<Array<{ region: Region
 }
 
 export async function getPortfolio(): Promise<PortfolioHolding[]> {
-  return published(portfolio).sort((a, b) => a.name.localeCompare(b.name));
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('portfolio')
+    .select('slug,name,vehicle,geography,cause,url,return_posture,consent_received_at')
+    .order('sort_order')
+    .order('name');
+  return emptyOnMissingConfig(data).map((r) => ({
+    slug: r.slug,
+    name: r.name,
+    vehicle: r.vehicle as Vehicle,
+    geography: r.geography,
+    cause: r.cause,
+    url: r.url,
+    returnPosture: r.return_posture as ReturnPosture,
+    consentReceivedAt: r.consent_received_at
+  }));
 }
 
 /** Undated events sort last; past events are not returned. */
 export async function getEvents(now = new Date()): Promise<Event[]> {
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('events')
+    .select('slug,title,starts_at,location,description,link')
+    .order('starts_at', { ascending: true, nullsFirst: false });
   const today = now.toISOString().slice(0, 10);
-  return events
-    .filter((e) => !e.date || e.date >= today)
-    .sort((a, b) => (a.date ?? '9999').localeCompare(b.date ?? '9999'));
+  return emptyOnMissingConfig(data)
+    .map((r) => ({
+      slug: r.slug,
+      title: r.title,
+      date: r.starts_at ? String(r.starts_at).slice(0, 10) : null,
+      location: r.location ?? '',
+      description: r.description ?? '',
+      url: r.link
+    }))
+    .filter((e) => !e.date || e.date >= today);
 }
 
 export async function getResources(): Promise<Resource[]> {
-  return resources;
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('resources')
+    .select('slug,title,source,why_it_matters,link')
+    .order('sort_order');
+  return emptyOnMissingConfig(data).map((r) => ({
+    slug: r.slug,
+    title: r.title,
+    source: r.source ?? '',
+    why: r.why_it_matters ?? '',
+    url: r.link ?? ''
+  }));
 }
 
 export function formatEventDate(date: string | null): string {
   if (!date) return 'Date to be set';
   return new Date(date + 'T12:00:00Z').toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC'
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
   });
 }

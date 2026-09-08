@@ -38,6 +38,15 @@
   --warn-ink: #6B4708;
   --warn-line: #C99A3E;
 
+  /* The hero band. Light grounds get --mist, which is the band the design kit
+     used; dark grounds get the dark theme's --mist. The accent has to flip too:
+     --logo-teal-glow is built for dark grounds and disappears on a light one. */
+  --hero-bg: #F0F8F8;
+  --hero-ink: var(--ink);
+  --hero-lede: var(--slate);
+  --hero-accent: var(--teal-deep);
+  --hero-border: var(--line);
+
   /* The continue-reading banner. Deeper and bluer than --teal-deep so it holds
      its own against both the white page and the dark theme, where a lighter
      teal would wash out. */
@@ -105,6 +114,11 @@
     --surface-cta: #1D5A6E;
     --surface-cta-hover: #27738B;
     --text-accent: var(--teal);
+    --hero-bg: #101B1D;
+    --hero-ink: #F2F6F7;
+    --hero-lede: #D5DEE3;
+    --hero-accent: var(--logo-teal-glow);
+    --hero-border: #22383C;
   }
 }
 :root[data-theme="dark"] {
@@ -112,7 +126,14 @@
   --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
   --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
   --surface-accent: #16302F;
+  --surface-cta: #1D5A6E;
+  --surface-cta-hover: #27738B;
   --text-accent: var(--teal);
+  --hero-bg: #101B1D;
+  --hero-ink: #F2F6F7;
+  --hero-lede: #D5DEE3;
+  --hero-accent: var(--logo-teal-glow);
+  --hero-border: #22383C;
 }
 
 @layer base {
@@ -181,12 +202,16 @@
 }
 
 @layer components {
-  /* The hero's dark ground is the design system's own dark theme: --mist at
-     #101B1D with --ink and --slate over it. The accent is --logo-teal-glow,
-     which the token file describes as the light-teal value for dark grounds. */
-  .hero-dark { background: #101B1D; color: #F2F6F7; border-bottom: 1px solid #22383C; }
-  .hero-dark .hero-lede { color: #D5DEE3; }
-  .hero-dark .hero-accent { color: var(--logo-teal-glow); font-style: italic; }
+  /* The hero follows the theme rather than being permanently dark: --mist on a
+     light ground, the dark theme's --mist on a dark one. The accent has to flip
+     with it — --logo-teal-glow is built for dark grounds and vanishes on a
+     light one, so light gets --teal-deep instead. */
+  .hero { background: var(--hero-bg); color: var(--hero-ink); border-bottom: 1px solid var(--hero-border); }
+  .hero .hero-lede { color: var(--hero-lede); }
+  .hero .hero-accent { color: var(--hero-accent); font-style: italic; }
+  /* White cards need an edge on the light ground; on the dark one they separate
+     themselves. */
+  .hero .hero-card { border: 1px solid var(--hero-border); }
 
   /* Portfolio cards drift gently behind the headline. Each card sets its own
      --float-delay and --float-duration so they never move in lockstep. */

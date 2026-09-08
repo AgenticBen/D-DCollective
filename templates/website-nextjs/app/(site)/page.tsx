@@ -3,7 +3,7 @@ import {
   ButtonLink, Card, Eyebrow, GradientRule, Quote, SectionHeader
 } from '@/components/ds';
 import { HeroGutter } from '@/components/hero-cards';
-import { Logo } from '@/components/ds';
+import { ThemedLogo } from '@/components/ds';
 import { getPortfolio } from '@/lib/data';
 import { heroSubtitle, mission, intro, pathways, fitYes, fitNo } from '@/content/home';
 
@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="hero-dark overflow-hidden">
+      <section className="hero overflow-hidden">
         <div className="mx-auto grid max-w-[1400px] items-center gap-8 px-7 py-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,2.6fr)_minmax(0,0.85fr)] lg:py-24">
           <HeroGutter holdings={left} />
 
@@ -41,10 +41,9 @@ export default async function HomePage() {
             </div>
             </div>
 
-            {/* The hero ground is always dark, so this takes the dark variant
-                directly rather than the theme-swapping ThemedLogo. */}
+            {/* The ground now follows the theme, so the mark has to as well. */}
             <div className="justify-self-center md:justify-self-end">
-              <Logo variant="mark-dark-transparent" height={190} alt="" />
+              <ThemedLogo kind="mark" height={190} alt="" />
             </div>
           </div>
 

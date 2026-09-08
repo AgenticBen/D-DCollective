@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NextPage } from '@/components/next-page';
 import type { Metadata } from 'next';
 import { VisionStatement } from '@/components/vision-statement';
 import { ValuesList } from '@/components/values-list';
@@ -29,11 +30,7 @@ export default function MissionPage() {
           <ValuesList items={values} />
         </div>
         <p className="mt-10 max-w-measure text-body">{closing}</p>
-        <p className="mt-6">
-          <Link href="/how-we-work" className="text-accent underline decoration-rule hover:decoration-accent">
-            How we work
-          </Link>
-        </p>
+        <NextPage href="/how-we-work" label="How we work" hint="Keep reading" />
       </section>
     </>
   );

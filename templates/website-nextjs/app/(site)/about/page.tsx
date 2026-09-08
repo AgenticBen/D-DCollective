@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NextPage } from '@/components/next-page';
 import type { Metadata } from 'next';
 import { SectionHeader } from '@/components/ds';
 import { PersonSection } from '@/components/person-section';
@@ -21,11 +22,7 @@ export default function AboutPage() {
       </div>
 
       <p className="mt-[var(--section-gap)] max-w-measure text-body">{closing}</p>
-      <p className="mt-6">
-        <Link href="/mission" className="text-accent underline decoration-rule hover:decoration-accent">
-          Mission and values
-        </Link>
-      </p>
+      <NextPage href="/mission" label="Mission and values" hint="Keep reading" />
     </div>
   );
 }

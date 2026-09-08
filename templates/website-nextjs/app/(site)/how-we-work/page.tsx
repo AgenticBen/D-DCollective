@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NextPage } from '@/components/next-page';
 import { Card, Note, Pill, SectionHeader, Tile } from '@/components/ds';
 import { levers, practices } from '@/content/how-we-work';
 
@@ -55,6 +56,7 @@ export default function HowWeWorkPage() {
           </div>
         </Card>
       </div>
+      <NextPage href="/changemakers" label="The leaders we walk with" hint="Keep reading" />
     </div>
   );
 }

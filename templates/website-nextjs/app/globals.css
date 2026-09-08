@@ -38,6 +38,12 @@
   --warn-ink: #6B4708;
   --warn-line: #C99A3E;
 
+  /* The continue-reading banner. Deeper and bluer than --teal-deep so it holds
+     its own against both the white page and the dark theme, where a lighter
+     teal would wash out. */
+  --surface-cta: #1D5A6E;
+  --surface-cta-hover: #24697F;
+
   /* The spotlight surface: a fuller teal than --mist, which was too faint to
      mark the next gathering as different. */
   --surface-accent: #CFE7E7;
@@ -96,6 +102,8 @@
     --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
     --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
     --surface-accent: #16302F;
+    --surface-cta: #1D5A6E;
+    --surface-cta-hover: #27738B;
     --text-accent: var(--teal);
   }
 }
@@ -194,4 +202,9 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-card { animation: none; }
   }
+}
+
+@layer components {
+  .next-page:hover { background: var(--surface-cta-hover) !important; }
+  .next-page:hover span[aria-hidden] { border-color: rgba(255, 255, 255, .85); }
 }

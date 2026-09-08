@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NextPage } from '@/components/next-page';
 import { SectionHeader } from '@/components/ds';
 import { ChangemakersTabs } from '@/components/changemakers-tabs';
 import { getOrganizationsForViewer, getPortfolio, POSTURE_LABELS, VEHICLE_LABELS } from '@/lib/data';
@@ -33,6 +34,7 @@ export default async function ChangemakersPage() {
         isStaff={isStaff}
         draftSlugs={[...draftSlugs]}
       />
+      <NextPage href="/gather" label="Where we gather" hint="Keep reading" />
     </div>
   );
 }

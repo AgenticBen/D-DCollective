@@ -1,6 +1,7 @@
 export const revalidate = 60;
 
 import type { Metadata } from 'next';
+import { NextPage } from '@/components/next-page';
 import {
   ButtonLink, Card, Eyebrow, GradientRule, Note, Pill, SectionHeader
 } from '@/components/ds';
@@ -67,6 +68,7 @@ function EventRow({ event, muted = false }: { event: Event; muted?: boolean }) {
       <div style={{ display: 'grid', gap: 10, justifyItems: 'end' }}>
         {muted ? null : <ButtonLink href="/apply" variant="secondary" size="sm">Request an invitation</ButtonLink>}
       </div>
+      <NextPage href="/apply" label="Start a conversation" hint="When you are ready" />
     </div>
   );
 }

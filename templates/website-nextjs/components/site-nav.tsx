@@ -1,30 +1,48 @@
-import Link from 'next/link';
+'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Logo, buttonStyle } from '@/components/ds';
+import { ThemeToggle } from '@/components/theme-toggle';
+
+/** Mirrors the design system's SiteHeader: full-bleed, 18px/28px, gap 24. */
 const links = [
-  { href: '/mission', label: 'Mission' },
-  { href: '/how-we-work', label: 'How we work' },
+  { href: '/', label: 'Home' },
+  { href: '/mission', label: 'Mission & Vision' },
+  { href: '/how-we-work', label: 'How We Work' },
   { href: '/changemakers', label: 'Changemakers' },
-  { href: '/gather', label: 'Gather' },
-  { href: '/about', label: 'About' }
+  { href: '/gather', label: 'Events' },
+  { href: '/about', label: 'Eric & Michele' }
 ];
 
 export function SiteNav() {
+  const pathname = usePathname();
+
   return (
-    <header className="border-b border-rule">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-        <Link href="/" className="no-underline">
-          <span className="font-display text-[1.35rem] leading-none">D+D Collective</span>
-        </Link>
-        <nav aria-label="Primary">
-          <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[0.95rem]">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="no-underline hover:underline">{l.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+    <header style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+      padding: '18px 28px', borderBottom: 'var(--border-1)', background: 'var(--surface-page)',
+      flexWrap: 'wrap'
+    }}>
+      <Link href="/" aria-label="D+D Collective — home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <Logo variant="lockup" height={34} />
+      </Link>
+
+      <nav aria-label="Primary" style={{ display: 'flex', alignItems: 'center', gap: 22, flexWrap: 'wrap' }}>
+        {links.map((l) => {
+          const active = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
+          return (
+            <Link key={l.href} href={l.href} aria-current={active ? 'page' : undefined} style={{
+              fontSize: 'var(--fs-nav)', textDecoration: 'none',
+              color: active ? 'var(--text-accent)' : 'var(--text-body)',
+              borderBottom: `1px solid ${active ? 'var(--teal-deep)' : 'transparent'}`,
+              paddingBottom: 2, transition: 'var(--transition-color)'
+            }}>{l.label}</Link>
+          );
+        })}
+        <ThemeToggle />
+        <Link href="/apply" style={buttonStyle('primary', 'sm')}>Connect</Link>
+      </nav>
     </header>
   );
 }

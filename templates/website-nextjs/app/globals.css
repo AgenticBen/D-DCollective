@@ -2,61 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------------------------------------------------------------
-   Palette. Six values, one hue family plus a green-black ink.
-   Replace these six declarations when the logo suite arrives;
-   nothing else in the codebase names a colour.
-   --------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------
+   Design tokens, ported verbatim from the D+D Collective design system
+   (tokens/colors.css, typography.css, spacing.css, radii.css, effects.css,
+   motion.css). Change them there first, then mirror here — the design system
+   is the source of truth.
+   --------------------------------------------------------------------------- */
 :root {
-  --ink: #12211F;      /* green-black: text, and the ground of the vision spread */
-  --paper: #FFFFFF;    /* the default ground; deliberately not cream */
-  --field: #EDF3F2;    /* pale teal wash: the one alternate surface */
-  --teal: #67AFB7;     /* the logo teal, for rules and large marks */
-  --teal-ink: #23646E; /* the logo teal darkened to carry small type and links */
-  --rule: #C9D9D8;     /* hairline */
+  /* Logo palette — sampled from the artwork. Authoritative for the mark. */
+  --logo-teal-light: #A4DBDA;
+  --logo-teal: #67AFB7;
+  --logo-teal-glow: #9FE4E0;
+  --grad-brand: linear-gradient(135deg, #A4DBDA 0%, #67AFB7 100%);
 
-  --font-text: 'DM Sans';
-  --font-display: 'Newsreader';
+  /* Interface teal — carries UI text and borders, where the logo teal fails contrast. */
+  --teal: #4BBFBF;
+  --teal-deep: #2A8FA8;
+  --teal-mid: #3BADB5;
+  --teal-bright: #4BCECE;
+
+  --ink: #0A0A0A;
+  --slate: #2D3748;
+  --muted: #5B6B78;
+
+  --bg: #FFFFFF;
+  --mist: #F0F8F8;
+  --line: #D6E6E8;
+  --card: #FFFFFF;
+
+  --grad: linear-gradient(135deg, #4BCECE 0%, #2A8FA8 100%);
+
+  --warn-bg: #FFF6E8;
+  --warn-ink: #8A5A00;
+  --warn-line: #F2D29B;
+
+  --text-strong: var(--ink);
+  --text-body: var(--slate);
+  --text-muted: var(--muted);
+  --text-accent: var(--teal-deep);
+  --text-on-accent: #FFFFFF;
+  --surface-page: var(--bg);
+  --surface-card: var(--card);
+  --surface-sunken: var(--mist);
+  --border-hairline: var(--line);
+  --border-accent: var(--teal);
+  --focus-ring: var(--teal-deep);
+
+  /* Type */
+  --font-sans: var(--font-text-loaded), 'DM Sans', Inter, system-ui, sans-serif;
+  --font-mono: var(--font-mono-loaded), 'DM Mono', ui-monospace, SFMono-Regular, monospace;
+  --fw-light: 300; --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --fs-eyebrow: 12px; --fs-pill: 11.5px; --fs-micro: 12px; --fs-meta: 14px;
+  --fs-nav: 14px; --fs-table: 14.5px; --fs-tile: 15px; --fs-body: 16px;
+  --fs-h3: 17px; --fs-quote: 18px; --fs-h2: 26px; --fs-h1: clamp(30px, 4vw, 44px);
+  --lh-tight: 1.1; --lh-quote: 1.55; --lh-body: 1.6;
+  --ls-h1: -.02em; --ls-h2: -.015em; --ls-brand: .01em;
+  --ls-pill: .03em; --ls-eyebrow: .08em; --ls-label: .06em;
+  --measure-prose: 68ch; --measure-lede: 66ch;
+
+  /* Spacing */
+  --pad-tile: 16px 18px; --pad-card: 20px 22px; --pad-note: 12px 16px;
+  --pad-cell: 9px 12px; --pad-head-cell: 10px 12px;
+  --gap-grid: 14px; --gap-cols: 18px; --section-gap: 56px;
+  --container-max: 1040px;
+
+  /* Radii */
+  --radius-pill: 999px; --radius-note: 10px; --radius-tile: 12px;
+  --radius-panel: 12px; --radius-card: 14px; --radius-rule: 2px;
+
+  /* Effects */
+  --border-1: 1px solid var(--line);
+  --border-accent-left: 3px solid var(--teal);
+  --rule-height: 2px; --rule-width: 56px;
+  --shadow-overlay: 0 12px 32px rgba(10, 10, 10, .12);
+  --shadow-focus: 0 0 0 3px rgba(42, 143, 168, .28);
+
+  /* Motion */
+  --dur-fast: 120ms; --dur-base: 180ms; --ease-standard: cubic-bezier(.2, 0, .2, 1);
+  --transition-color: color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #F2F6F7; --slate: #D5DEE3; --muted: #98A8B2;
+    --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
+    --warn-bg: #2A1F0B; --warn-ink: #F2C97A; --warn-line: #5A4212;
+    --text-accent: var(--teal);
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #F2F6F7; --slate: #D5DEE3; --muted: #98A8B2;
+  --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
+  --warn-bg: #2A1F0B; --warn-ink: #F2C97A; --warn-line: #5A4212;
+  --text-accent: var(--teal);
 }
 
 @layer base {
-  html { -webkit-text-size-adjust: 100%; }
-
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-text), system-ui, sans-serif;
-    font-size: 17px;
-    line-height: 1.65;
-    font-synthesis-weight: none;
+    background: var(--surface-page);
+    color: var(--text-strong);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
   }
+  a { color: var(--text-accent); transition: var(--transition-color); }
+  a:hover { color: var(--teal-mid); }
+  :focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: 4px; }
 
-  /* Real focus, visible on every ground. */
-  :focus-visible {
-    outline: 2px solid var(--teal-ink);
-    outline-offset: 3px;
-    border-radius: 1px;
-  }
-  .on-ink :focus-visible { outline-color: var(--teal); }
-
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
-  a:hover { text-decoration-color: var(--teal-ink); }
-
-  /* Skip link */
   .skip {
-    position: absolute; left: -9999px; top: 0; z-index: 50;
-    background: var(--ink); color: var(--paper); padding: 0.75rem 1rem;
+    position: absolute; left: -100%; top: 0; z-index: 50;
+    background: var(--teal-deep); color: var(--text-on-accent);
+    padding: 10px 18px; border-radius: 0 0 var(--radius-note) 0;
   }
   .skip:focus { left: 0; }
-
-  ::selection { background: var(--field); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }

@@ -1,31 +1,46 @@
 import Link from 'next/link';
+import { Logo, buttonStyle } from '@/components/ds';
+
+/** Mirrors the design system's SiteFooter, including the admin link beneath the logo. */
+const columns = [
+  { title: 'About', links: [['Mission & Vision', '/mission'], ['How We Work', '/how-we-work'], ['Eric & Michele', '/about']] },
+  { title: 'Changemakers', links: [['Partners', '/changemakers'], ['Portfolio', '/changemakers/portfolio']] },
+  { title: 'Connect', links: [['Grantees', '/apply/grants'], ['Investors', '/apply/investment'], ['Gatherings', '/gather']] }
+] as const;
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-rule">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-[1fr_auto]">
+    <footer style={{ borderTop: 'var(--border-1)', background: 'var(--surface-sunken)' }}>
+      <div style={{
+        padding: '36px 28px', display: 'grid', gap: 28,
+        gridTemplateColumns: 'minmax(220px,1fr) repeat(auto-fit,minmax(140px,max-content))'
+      }}>
         <div>
-          <p className="font-display text-[1.15rem] leading-snug">
+          <Logo variant="lockup" height={30} />
+          <p style={{ margin: '14px 0 0', fontSize: 13.5, color: 'var(--text-muted)', maxWidth: '40ch' }}>
             Expanding leadership pathways toward the restoration of shalom.
           </p>
-          <p className="mt-3 max-w-[46ch] text-[0.9rem] text-ink/70">
-            D+D Collective is the private philanthropy of Eric and Michele Dudley, working in Charlotte,
-            North Carolina and East Africa.
-          </p>
-          <p className="mt-6">
-            <Link href="/admin/login" className="text-[0.8rem] text-ink/50 no-underline hover:underline">
-              Admin sign in
-            </Link>
-          </p>
+          <span style={{ display: 'block', marginTop: 16 }}>
+            <Link href="/admin/login" style={buttonStyle('primary', 'sm')}>Admin sign in</Link>
+            <span style={{ display: 'block', fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', marginTop: 10 }}>
+              Staff only. Survey results are read here.
+            </span>
+          </span>
         </div>
-        <nav aria-label="Footer">
-          <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[0.9rem] sm:flex-col">
-            <li><Link href="/mission" className="no-underline hover:underline">Mission</Link></li>
-            <li><Link href="/how-we-work" className="no-underline hover:underline">How we work</Link></li>
-            <li><Link href="/apply" className="no-underline hover:underline">Apply</Link></li>
-            <li><Link href="/about" className="no-underline hover:underline">About</Link></li>
-          </ul>
-        </nav>
+
+        {columns.map((c) => (
+          <nav key={c.title} aria-label={c.title} style={{ display: 'grid', gap: 8, alignContent: 'start' }}>
+            <h2 style={{
+              fontSize: 'var(--fs-micro)', fontWeight: 'var(--fw-medium)', letterSpacing: 'var(--ls-label)',
+              textTransform: 'uppercase', color: 'var(--text-muted)', margin: 0
+            }}>{c.title}</h2>
+            {c.links.map(([label, href]) => (
+              <Link key={href} href={href} style={{ fontSize: 'var(--fs-nav)', color: 'var(--text-body)', textDecoration: 'none' }}>
+                {label}
+              </Link>
+            ))}
+          </nav>
+        ))}
       </div>
     </footer>
   );

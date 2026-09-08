@@ -91,20 +91,20 @@ export default function GrantFormPage() {
   return (
     <>
       <FormHeader title="Grant screening">
-        <p className="mt-8 max-w-measure text-ink/85">
+        <p className="mt-8 max-w-measure text-body">
           Ten short answers. This is a first gate rather than an application, and you will hear back only if
           there is a fit.
         </p>
       </FormHeader>
 
-      <form noValidate onSubmit={onSubmit} className="mx-auto max-w-6xl px-6 pb-20">
+      <form noValidate onSubmit={onSubmit} className="mx-auto max-w-container px-6 pb-20">
         <ErrorSummary ref={summaryRef} items={summary} />
         {state === 'failed' ? <SubmitFailed onRetry={() => setState('editing')} /> : null}
 
         <Honeypot />
 
         <fieldset className="divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 font-display text-[1.6rem] leading-tight">The organization</legend>
+          <legend className="pb-4 section-title">The organization</legend>
           <TextField name="organizationName" label={LABELS.organizationName} required errors={fieldErrors} />
           <TextField name="primaryContact" label={LABELS.primaryContact} required errors={fieldErrors} />
           <TextField name="email" type="email" label={LABELS.email} required errors={fieldErrors} />
@@ -134,8 +134,8 @@ export default function GrantFormPage() {
         </fieldset>
 
         <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 font-display text-[1.6rem] leading-tight">Leadership</legend>
-          <p className="max-w-measure border-l-2 border-teal-ink bg-field px-5 py-4 text-ink/85">
+          <legend className="pb-4 section-title">Leadership</legend>
+          <p className="max-w-measure border-l-2 border-accent bg-mist px-5 py-4 text-body">
             A diverse board and/or leadership team is a hard requirement here, not a preference. If that is
             not yet true of your organization, this is the point to stop.
           </p>
@@ -173,7 +173,7 @@ export default function GrantFormPage() {
         </fieldset>
 
         <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 font-display text-[1.6rem] leading-tight">The work</legend>
+          <legend className="pb-4 section-title">The work</legend>
           <ChoiceField
             name="geography"
             label={LABELS.geography}
@@ -224,7 +224,7 @@ export default function GrantFormPage() {
         </fieldset>
 
         <fieldset className="mt-14 divide-y divide-rule border-t border-rule">
-          <legend className="pb-4 font-display text-[1.6rem] leading-tight">The request</legend>
+          <legend className="pb-4 section-title">The request</legend>
           <TextField name="requestAmount" label={LABELS.requestAmount} required errors={fieldErrors} />
           <TextAreaField name="requestPurpose" label={LABELS.requestPurpose} hint="What the money would do." required errors={fieldErrors} rows={3} />
           <TextField name="requestTiming" label={LABELS.requestTiming} hint="When you need it, and whether that is movable." required errors={fieldErrors} />
@@ -249,7 +249,7 @@ export default function GrantFormPage() {
           >
             {state === 'sending' ? 'Sending' : 'Send'}
           </button>
-          <p className="text-[0.9rem] text-ink/65">You will hear back only if there is a fit.</p>
+          <p className="text-[0.9rem] text-muted">You will hear back only if there is a fit.</p>
         </div>
       </form>
     </>

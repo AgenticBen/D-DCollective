@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Logo, buttonStyle } from '@/components/ds';
+import { ThemedLogo, buttonStyle } from '@/components/ds';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 /** Mirrors the design system's SiteHeader: full-bleed, 18px/28px, gap 24. */
@@ -25,7 +25,7 @@ export function SiteNav() {
       flexWrap: 'wrap'
     }}>
       <Link href="/" aria-label="D+D Collective — home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <Logo variant="lockup" height={34} />
+        <ThemedLogo kind="lockup" height={34} />
       </Link>
 
       <nav aria-label="Primary" style={{ display: 'flex', alignItems: 'center', gap: 22, flexWrap: 'wrap' }}>

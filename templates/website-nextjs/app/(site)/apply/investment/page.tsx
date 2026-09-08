@@ -141,7 +141,7 @@ export default function InvestmentFormPage() {
   return (
     <>
       <FormHeader title="Investment pre-qualification">
-        <p className="mt-8 max-w-measure text-ink/85">
+        <p className="mt-8 max-w-measure text-body">
           Four short sections. This is a first gate rather than a data room, and you will hear back only if
           there is a fit.
         </p>
@@ -149,13 +149,13 @@ export default function InvestmentFormPage() {
 
       <SectionProgress sections={SECTIONS.map((s) => s.title)} current={section} />
 
-      <form ref={formRef} noValidate onSubmit={onSubmit} className="mx-auto max-w-6xl px-6 pb-20 pt-10">
+      <form ref={formRef} noValidate onSubmit={onSubmit} className="mx-auto max-w-container px-6 pb-20 pt-10">
         <ErrorSummary ref={summaryRef} items={summary} />
         {state === 'failed' ? <SubmitFailed onRetry={() => setState('editing')} /> : null}
 
         <Honeypot />
 
-        <h2 className="font-display text-[1.6rem] leading-tight">
+        <h2 className="section-title">
           {SECTIONS[section].title}
           <span className="sr-only">{', section ' + (section + 1) + ' of ' + SECTIONS.length}</span>
         </h2>
@@ -166,7 +166,7 @@ export default function InvestmentFormPage() {
             <TextField name="primaryContact" label={LABELS.primaryContact} required errors={fieldErrors} />
             <TextField name="email" type="email" label={LABELS.email} required errors={fieldErrors} />
             <div className="py-5">
-              <p className="max-w-measure border-l-2 border-teal-ink bg-field px-5 py-4 text-ink/85">
+              <p className="max-w-measure border-l-2 border-accent bg-mist px-5 py-4 text-body">
                 Our angel and programme-related tier is post-revenue only. If you are pre-revenue, we are not
                 the right first call, and there is no point filling in the rest of this. Come back when you
                 have revenue and we will read it properly.
@@ -270,8 +270,8 @@ export default function InvestmentFormPage() {
         {section === 3 ? (
           <div className="mt-6 divide-y divide-rule border-t border-rule">
             <div className="py-5">
-              <h3 className="font-display text-[1.25rem] leading-tight">The spectrum</h3>
-              <p className="mt-3 max-w-measure text-ink/85">
+              <h3 className="section-title">The spectrum</h3>
+              <p className="mt-3 max-w-measure text-body">
                 We read three parts of a business — strategy, operations and leadership — along one line.
                 Exploitative means the gain comes at someone’s expense. Ethical means nobody is harmed.
                 Redemptive means the business deliberately gives up something it did not have to give, so
@@ -329,7 +329,7 @@ export default function InvestmentFormPage() {
               Continue
             </button>
           )}
-          <p className="text-[0.9rem] text-ink/65">
+          <p className="text-[0.9rem] text-muted">
             {isLast ? 'You will hear back only if there is a fit.' : 'Section ' + (section + 1) + ' of ' + SECTIONS.length}
           </p>
         </div>

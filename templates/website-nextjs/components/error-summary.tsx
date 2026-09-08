@@ -17,18 +17,18 @@ export const ErrorSummary = forwardRef<HTMLDivElement, { items: SummaryItem[] }>
         ref={ref}
         role="alert"
         tabIndex={-1}
-        className="mb-8 max-w-measure border-l-2 border-teal-ink bg-field px-5 py-4"
+        className="mb-8 max-w-measure border-l-2 border-accent bg-mist px-5 py-4"
       >
-        <h2 className="font-display text-[1.25rem] leading-tight">
+        <h2 className="section-title">
           {items.length === 1 ? 'One thing to fix' : items.length + ' things to fix'}
         </h2>
         <ul className="mt-3 space-y-2">
           {items.map((i) => (
             <li key={i.name}>
-              <a href={'#' + i.name} className="text-teal-ink underline decoration-rule hover:decoration-teal-ink">
+              <a href={'#' + i.name} className="text-accent underline decoration-rule hover:decoration-accent">
                 {i.label}
               </a>
-              <span className="text-ink/75">{' — ' + i.message}</span>
+              <span className="text-muted">{' — ' + i.message}</span>
             </li>
           ))}
         </ul>

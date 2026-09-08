@@ -78,16 +78,22 @@ building the real admin.
 
 ## Brand
 
-Production decision, Sept 2026: the app is authoritative.
+The design system is the source of truth. `app/globals.css` is a verbatim port
+of `tokens/*.css`; change the tokens first, then mirror. `components/ds.tsx`
+mirrors the design system's components line-for-line.
 
-- `--logo-teal` `#67AFB7` for rules and large marks
-- `--teal-ink` `#23646E` for small type and links (the logo teal fails contrast
-  at body size)
-- `--ink-green` `#12211F` green-black for text
-- **DM Sans** for text, **Newsreader** for display
-- The interface teals (`#4BBFBF` / `#2A8FA8`) remain for the design-system cards
-- Sentence case. No emoji. Institutional "we", never "I". Interpuncts (·) carry
-  metadata. No icons — the system deliberately ships none.
+- **DM Sans** throughout, **DM Mono** for metadata, dates and token values.
+  The system ships no serif — do not reintroduce one.
+- Logo teals `#A4DBDA` / `#67AFB7` are authoritative for the mark and the
+  brand gradient. Interface teals `#4BBFBF` / `#2A8FA8` carry UI text and
+  borders, where the softer logo teal fails contrast.
+- Border-led, not shadow-led: one hairline, one 56x2px gradient rule. No
+  shadows except the focus ring. No icons — the system ships none; use a
+  label, a pill, a number, or a unicode arrow.
+- Sentence case. No emoji. Institutional "we", never "I". Interpuncts (·)
+  carry metadata.
+- Logo artwork is raster, traced from screenshots — the .ai/.eps files never
+  arrived. Replace `public/brand/*` when real vectors exist.
 
 ## Working on it
 

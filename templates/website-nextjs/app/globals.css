@@ -118,3 +118,48 @@
   }
   .skip:focus { left: 0; }
 }
+
+@layer components {
+  /* The design system's level-1 SectionHeader, as a class so every page header
+     carries the same weight, tracking and gradient rule without repeating it. */
+  .page-title {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-h1);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+    max-width: 24ch;
+  }
+  .page-title::after {
+    content: '';
+    display: block;
+    height: var(--rule-height);
+    width: var(--rule-width);
+    background: var(--grad);
+    border-radius: var(--radius-rule);
+    margin-top: 18px;
+  }
+
+  /* The level-2 heading of the same component. */
+  .section-title {
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-h2);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* ThemedLogo renders both variants and lets CSS choose, so the swap works in
+     a server component and survives hydration. The design system picks the
+     transparent variants on dark grounds. */
+  .logo-light { display: block; }
+  .logo-dark { display: none; }
+  :root[data-theme="dark"] .logo-light { display: none; }
+  :root[data-theme="dark"] .logo-dark { display: block; }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-light { display: none; }
+  :root:not([data-theme="light"]) .logo-dark { display: block; }
+}

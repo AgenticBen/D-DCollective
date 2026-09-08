@@ -26,8 +26,8 @@ export function EntryList({ items }: { items: Entry[] }) {
       {items.map((e) => (
         <div key={e.key} className="grid gap-1 border-b border-rule py-7 sm:grid-cols-[16rem_1fr] sm:gap-10">
           <dt>
-            <span className="block font-display text-[1.4rem] leading-tight">{e.term}</span>
-            {e.termNote ? <span className="mt-1 block text-[0.9rem] text-ink/65">{e.termNote}</span> : null}
+            <span className="block section-title">{e.term}</span>
+            {e.termNote ? <span className="mt-1 block text-[0.9rem] text-muted">{e.termNote}</span> : null}
           </dt>
           <dd className="max-w-measure">
             {e.logoUrl ? (
@@ -37,7 +37,7 @@ export function EntryList({ items }: { items: Entry[] }) {
             <p className="m-0">{e.body}</p>
             {e.href ? (
               <p className="mt-3">
-                <Link href={e.href} className="text-teal-ink underline decoration-rule hover:decoration-teal-ink">
+                <Link href={e.href} className="text-accent underline decoration-rule hover:decoration-accent">
                   {e.linkLabel ?? 'Visit ' + e.term}
                 </Link>
               </p>

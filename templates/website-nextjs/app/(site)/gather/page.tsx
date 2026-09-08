@@ -11,16 +11,16 @@ export default async function GatherPage() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 pb-12 pt-16 sm:pt-20">
-        <h1 className="max-w-display font-display text-[clamp(1.8rem,4vw,2.6rem)] font-light leading-[1.16] tracking-[-0.015em]">
+      <section className="mx-auto max-w-container px-6 pb-12 pt-16 sm:pt-20">
+        <h1 className="page-title">
           {title}
         </h1>
-        <p className="mt-8 max-w-measure text-ink/85">{intro}</p>
-        <p className="mt-4 max-w-measure text-ink/85">{invitationNote}</p>
+        <p className="mt-8 max-w-measure text-body">{intro}</p>
+        <p className="mt-4 max-w-measure text-body">{invitationNote}</p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-14" aria-labelledby="events">
-        <h2 id="events" className="font-display text-[1.6rem] leading-tight">Coming up</h2>
+      <section className="mx-auto max-w-container px-6 pb-14" aria-labelledby="events">
+        <h2 id="events" className="section-title">Coming up</h2>
         {events.length > 0 ? (
           <div className="mt-8">
             <EntryList
@@ -36,9 +36,9 @@ export default async function GatherPage() {
           </div>
         ) : (
           <div className="mt-6 max-w-measure border-l border-teal pl-5">
-            <p className="text-ink/85">{emptyState}</p>
+            <p className="text-body">{emptyState}</p>
             <p className="mt-4">
-              <Link href="/apply" className="text-teal-ink underline decoration-rule hover:decoration-teal-ink">
+              <Link href="/apply" className="text-accent underline decoration-rule hover:decoration-accent">
                 Write to us
               </Link>
             </p>
@@ -46,9 +46,9 @@ export default async function GatherPage() {
         )}
       </section>
 
-      <section className="mx-auto max-w-6xl px-6" aria-labelledby="resources">
-        <h2 id="resources" className="font-display text-[1.6rem] leading-tight">Worth reading</h2>
-        <p className="mt-3 max-w-measure text-ink/85">{resourcesIntro}</p>
+      <section className="mx-auto max-w-container px-6" aria-labelledby="resources">
+        <h2 id="resources" className="section-title">Worth reading</h2>
+        <p className="mt-3 max-w-measure text-body">{resourcesIntro}</p>
         <div className="mt-8">
           <EntryList
             items={resources.map((r) => ({

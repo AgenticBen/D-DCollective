@@ -12,16 +12,16 @@ export default async function PortfolioPage() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 pb-12 pt-16 sm:pt-20">
-        <h1 className="max-w-display font-display text-[clamp(1.8rem,4vw,2.6rem)] font-light leading-[1.16] tracking-[-0.015em]">
+      <section className="mx-auto max-w-container px-6 pb-12 pt-16 sm:pt-20">
+        <h1 className="page-title">
           {title}
         </h1>
-        <p className="mt-8 max-w-measure text-ink/85">{definition}</p>
-        <p className="mt-4 max-w-measure text-ink/85">{definitionMore}</p>
-        <p className="mt-4 max-w-measure text-[0.95rem] text-ink/65">{note}</p>
+        <p className="mt-8 max-w-measure text-body">{definition}</p>
+        <p className="mt-4 max-w-measure text-body">{definitionMore}</p>
+        <p className="mt-4 max-w-measure text-[0.95rem] text-muted">{note}</p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6" aria-labelledby="holdings">
+      <section className="mx-auto max-w-container px-6" aria-labelledby="holdings">
         <h2 id="holdings" className="sr-only">Holdings</h2>
         <EntryList
           items={holdings.map((h) => ({
@@ -34,7 +34,7 @@ export default async function PortfolioPage() {
           }))}
         />
         <p className="mt-10">
-          <Link href="/changemakers" className="text-teal-ink underline decoration-rule hover:decoration-teal-ink">
+          <Link href="/changemakers" className="text-accent underline decoration-rule hover:decoration-accent">
             The organizations we fund
           </Link>
         </p>

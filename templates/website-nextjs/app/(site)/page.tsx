@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {
-  ButtonLink, Card, Eyebrow, GradientRule, Logo, Quote, SectionHeader
+  ButtonLink, Card, Eyebrow, GradientRule, Quote, SectionHeader, ThemedLogo
 } from '@/components/ds';
 import { mission, intro, pathways, fitYes, fitNo } from '@/content/home';
 
@@ -24,7 +24,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="hidden justify-self-center lg:grid" style={{ placeItems: 'center', width: 300, height: 300 }}>
-            <Logo variant="mark-transparent" height={200} alt="" />
+            <ThemedLogo kind="mark" height={200} alt="" />
           </div>
         </div>
       </section>

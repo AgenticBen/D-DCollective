@@ -158,3 +158,25 @@ export function ButtonLink({ href, children, variant = 'primary', size = 'md' }:
 }) {
   return <Link href={href} style={buttonStyle(variant, size)}>{children}</Link>;
 }
+
+/**
+ * The logo, swapped by theme in CSS. Light grounds get the standard artwork;
+ * dark grounds get the knocked-out transparent variant, as the design system
+ * specifies. Both <img> elements ship; only one is displayed.
+ */
+export function ThemedLogo({ kind = 'lockup', height = 34, alt = 'D+D Collective' }: {
+  kind?: 'lockup' | 'mark'; height?: number; alt?: string;
+}) {
+  /* Matching the design system's own usage: the lockup sits on the page ground
+     and keeps its artwork, while the mark sits on the mist band and uses the
+     knocked-out variant so no white square shows. Dark grounds always use the
+     transparent dark variant. */
+  const light = (kind === 'mark' ? 'mark-transparent' : 'lockup') as LogoVariant;
+  const dark = `${kind}-dark-transparent` as LogoVariant;
+  return (
+    <>
+      <span className="logo-light"><Logo variant={light} height={height} alt={alt} /></span>
+      <span className="logo-dark"><Logo variant={dark} height={height} alt="" /></span>
+    </>
+  );
+}

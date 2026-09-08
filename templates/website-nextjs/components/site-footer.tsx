@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Logo, buttonStyle } from '@/components/ds';
+import { ThemedLogo, buttonStyle } from '@/components/ds';
 
 /** Mirrors the design system's SiteFooter, including the admin link beneath the logo. */
 const columns = [
@@ -16,7 +16,7 @@ export function SiteFooter() {
         gridTemplateColumns: 'minmax(220px,1fr) repeat(auto-fit,minmax(140px,max-content))'
       }}>
         <div>
-          <Logo variant="lockup" height={30} />
+          <ThemedLogo kind="lockup" height={30} />
           <p style={{ margin: '14px 0 0', fontSize: 13.5, color: 'var(--text-muted)', maxWidth: '40ch' }}>
             Expanding leadership pathways toward the restoration of shalom.
           </p>

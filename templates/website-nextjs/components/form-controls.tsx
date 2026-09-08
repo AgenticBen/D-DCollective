@@ -5,9 +5,9 @@ import { useId } from 'react';
 type FieldErrors = Record<string, string[] | undefined>;
 
 const labelClass = 'block text-[0.95rem] font-medium';
-const hintClass = 'mt-1 block max-w-measure text-[0.9rem] text-ink/65';
+const hintClass = 'mt-1 block max-w-measure text-[0.9rem] text-muted';
 const controlClass =
-  'mt-3 block w-full max-w-[38rem] rounded-none border border-rule bg-paper px-3 py-2 text-[1rem] text-ink placeholder:text-ink/40 focus:border-teal-ink';
+  'mt-3 block w-full max-w-[38rem] rounded-none border border-rule bg-paper px-3 py-2 text-[1rem] text-ink placeholder:text-muted focus:border-accent';
 const errorClass = 'mt-2 block max-w-measure text-[0.9rem] text-ink';
 
 function ErrorText({ id, messages }: { id: string; messages?: string[] }) {
@@ -42,7 +42,7 @@ export function TextField({
   return (
     <div className="py-5">
       <label className={labelClass} htmlFor={name}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-ink/55">required</span> : null}
+        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
       </label>
       {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
       <input
@@ -67,7 +67,7 @@ export function TextAreaField({
   return (
     <div className="py-5">
       <label className={labelClass} htmlFor={name}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-ink/55">required</span> : null}
+        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
       </label>
       {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
       <textarea
@@ -97,7 +97,7 @@ export function ChoiceField({
       aria-describedby={[hint ? hintId : null, invalid ? errorId : null].filter(Boolean).join(' ') || undefined}
     >
       <legend className={labelClass}>
-        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-ink/55">required</span> : null}
+        {label}{required ? <span className="ml-2 text-[0.85rem] font-normal text-muted">required</span> : null}
       </legend>
       {hint ? <span className={hintClass} id={hintId}>{hint}</span> : null}
       <div className="mt-3 max-w-[38rem] border-t border-rule">
@@ -107,11 +107,11 @@ export function ChoiceField({
               type={multiple ? 'checkbox' : 'radio'}
               name={name}
               value={o.value}
-              className="mt-[0.35rem] h-4 w-4 shrink-0 accent-[var(--teal-ink)]"
+              className="mt-[0.35rem] h-4 w-4 shrink-0 accent-[var(--teal-deep)]"
             />
             <span>
               <span className="block">{o.label}</span>
-              {o.note ? <span className="mt-1 block text-[0.9rem] text-ink/65">{o.note}</span> : null}
+              {o.note ? <span className="mt-1 block text-[0.9rem] text-muted">{o.note}</span> : null}
             </span>
           </label>
         ))}

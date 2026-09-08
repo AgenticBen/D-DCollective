@@ -49,9 +49,11 @@
 
   /* The continue-reading banner. Deeper and bluer than --teal-deep so it holds
      its own against both the white page and the dark theme, where a lighter
-     teal would wash out. */
-  --surface-cta: #1D5A6E;
-  --surface-cta-hover: #24697F;
+     teal would wash out. Lightened from #1D5A6E; #26758C is the lightest value
+     that still clears 4.5:1 for white text at this size, which the interface
+     teals do not. */
+  --surface-cta: #26758C;
+  --surface-cta-hover: #2B7E96;
 
   /* The spotlight surface: a fuller teal than --mist, which was too faint to
      mark the next gathering as different. */
@@ -111,8 +113,8 @@
     --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
     --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
     --surface-accent: #16302F;
-    --surface-cta: #1D5A6E;
-    --surface-cta-hover: #27738B;
+    --surface-cta: #26758C;
+    --surface-cta-hover: #2B7E96;
     --text-accent: var(--teal);
     --hero-bg: #101B1D;
     --hero-ink: #F2F6F7;
@@ -126,8 +128,8 @@
   --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
   --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
   --surface-accent: #16302F;
-  --surface-cta: #1D5A6E;
-  --surface-cta-hover: #27738B;
+  --surface-cta: #26758C;
+  --surface-cta-hover: #2B7E96;
   --text-accent: var(--teal);
   --hero-bg: #101B1D;
   --hero-ink: #F2F6F7;
@@ -231,5 +233,8 @@
 
 @layer components {
   .next-page:hover { background: var(--surface-cta-hover) !important; }
-  .next-page:hover span[aria-hidden] { border-color: rgba(255, 255, 255, .85); }
+  .next-page:hover .next-page-arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) {
+    .next-page:hover .next-page-arrow { transform: none; }
+  }
 }

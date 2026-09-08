@@ -10,27 +10,27 @@ export const metadata: Metadata = { title: 'Mission — D+D Collective' };
 export default function MissionPage() {
   return (
     <>
-      <section className="mx-auto max-w-container px-6 pb-14 pt-16 sm:pt-20">
+      <section className="mx-auto max-w-container px-7 pb-20 pt-16 sm:pb-24 sm:pt-20">
         <h1 className="page-title">
           {missionLine}
         </h1>
-        <p className="mt-8 max-w-measure text-body">{missionBody}</p>
-        <p className="mt-6 max-w-measure border-l border-teal pl-5 text-body">{shalomGloss}</p>
+        <p className="mt-10 max-w-measure text-body">{missionBody}</p>
+        <p className="mt-9 max-w-measure border-l border-teal pl-5 text-body">{shalomGloss}</p>
       </section>
 
       <VisionStatement>{vision}</VisionStatement>
 
-      <section className="mx-auto max-w-container px-6 pt-16 sm:pt-20" aria-labelledby="values">
+      <section className="mx-auto max-w-container px-7 pb-4 pt-20 sm:pt-28" aria-labelledby="values">
         <h2 id="values" className="section-title">Values</h2>
-        <p className="mt-3 max-w-measure text-body">
+        <p className="mt-5 max-w-measure text-body">
           Six commitments, distilled from the same manifesto. They are the questions we ask ourselves about our
           own conduct before we ask them of anyone we fund.
         </p>
-        <div className="mt-10">
+        <div className="mt-12">
           <ValuesList items={values} />
         </div>
-        <p className="mt-10 max-w-measure text-body">{closing}</p>
-        <NextPage href="/how-we-work" label="How we work" hint="Keep reading" />
+        <p className="mt-14 max-w-measure text-body">{closing}</p>
+        <NextPage href="/how-we-work" label="How we work" />
       </section>
     </>
   );

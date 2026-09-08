@@ -22,7 +22,7 @@ export default function AboutPage() {
       </div>
 
       <p className="mt-[var(--section-gap)] max-w-measure text-body">{closing}</p>
-      <NextPage href="/mission" label="Mission and values" hint="Keep reading" />
+      <NextPage href="/mission" label="Mission and values" />
     </div>
   );
 }

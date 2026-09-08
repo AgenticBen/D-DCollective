@@ -56,7 +56,7 @@ export default function HowWeWorkPage() {
           </div>
         </Card>
       </div>
-      <NextPage href="/changemakers" label="The leaders we walk with" hint="Keep reading" />
+      <NextPage href="/changemakers" label="See Our Changemakers" />
     </div>
   );
 }

@@ -34,7 +34,7 @@ export default async function ChangemakersPage() {
         isStaff={isStaff}
         draftSlugs={[...draftSlugs]}
       />
-      <NextPage href="/gather" label="Where we gather" hint="Keep reading" />
+      <NextPage href="/gather" label="Events" />
     </div>
   );
 }

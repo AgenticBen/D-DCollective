@@ -13,8 +13,10 @@ export function HeroCard({ holding, index }: { holding: PortfolioHolding; index:
     .map((w) => w[0]!.toUpperCase())
     .join('');
 
-  /* Deterministic, so the layout does not reshuffle between server and client. */
-  const grounds = ['#1F5B63', '#7A2230', '#274B33', '#1C3A5E'];
+  /* The teal family only — the plates should read as D+D, not as the reference
+     site this layout came from. Deterministic, so the layout does not reshuffle
+     between server and client. */
+  const grounds = ['#2A8FA8', '#67AFB7', '#1F5B63', '#3BADB5'];
   const ground = grounds[index % grounds.length];
 
   return (

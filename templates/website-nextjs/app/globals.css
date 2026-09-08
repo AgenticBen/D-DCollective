@@ -173,10 +173,12 @@
 }
 
 @layer components {
-  /* The hero's dark ground. Deep teal rather than a neutral slate, so the
-     departure from the white editorial pages still reads as D+D. */
-  .hero-dark { background: #123239; color: #F2F6F7; }
-  .hero-dark .hero-accent { color: var(--logo-teal-light); font-style: italic; }
+  /* The hero's dark ground is the design system's own dark theme: --mist at
+     #101B1D with --ink and --slate over it. The accent is --logo-teal-glow,
+     which the token file describes as the light-teal value for dark grounds. */
+  .hero-dark { background: #101B1D; color: #F2F6F7; border-bottom: 1px solid #22383C; }
+  .hero-dark .hero-lede { color: #D5DEE3; }
+  .hero-dark .hero-accent { color: var(--logo-teal-glow); font-style: italic; }
 
   /* Portfolio cards drift gently behind the headline. Each card sets its own
      --float-delay and --float-duration so they never move in lockstep. */

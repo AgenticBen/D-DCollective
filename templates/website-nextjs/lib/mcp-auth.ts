@@ -1,4 +1,19 @@
+import { createHash } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
+
+/**
+ * Sessions, cached per warm instance and keyed by a hash of the credential so
+ * the credential itself is never held in memory.
+ *
+ * Without this, every MCP call signs in again — and a client makes several on
+ * connect alone (initialize, tools/list, then each tool call). That burns
+ * Supabase's auth rate limit for no reason and puts a round trip in front of
+ * every tool. A cold start simply re-authenticates.
+ */
+const SESSION_TTL_MS = 50 * 60 * 1000; // access tokens last an hour
+const sessions = new Map<string, { accessToken: string; email: string; expiresAt: number }>();
+
+const keyFor = (credential: string) => createHash('sha256').update(credential).digest('hex');
 
 /**
  * The MCP server acts as the signed-in staff member, never as a superuser.
@@ -19,6 +34,13 @@ export async function sessionForCredential(bearer: string): Promise<{ accessToke
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) return null;
 
+  const cacheKey = keyFor(bearer);
+  const cached = sessions.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return { accessToken: cached.accessToken, email: cached.email };
+  }
+  sessions.delete(cacheKey);
+
   const anon = createClient(url, key, { auth: { persistSession: false } });
   const separator = bearer.indexOf(':');
 
@@ -27,12 +49,16 @@ export async function sessionForCredential(bearer: string): Promise<{ accessToke
     const password = bearer.slice(separator + 1);
     const { data, error } = await anon.auth.signInWithPassword({ email, password });
     if (error || !data.session) return null;
-    return { accessToken: data.session.access_token, email: data.user?.email ?? email };
+    const session = { accessToken: data.session.access_token, email: data.user?.email ?? email };
+    sessions.set(cacheKey, { ...session, expiresAt: Date.now() + SESSION_TTL_MS });
+    return session;
   }
 
   const { data, error } = await anon.auth.getUser(bearer);
   if (error || !data.user) return null;
-  return { accessToken: bearer, email: data.user.email ?? 'unknown' };
+  const session = { accessToken: bearer, email: data.user.email ?? 'unknown' };
+  sessions.set(cacheKey, { ...session, expiresAt: Date.now() + SESSION_TTL_MS });
+  return session;
 }
 
 /** A Supabase client that carries the staff member's identity into RLS. */

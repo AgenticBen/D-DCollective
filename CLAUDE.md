@@ -46,6 +46,23 @@ The site may describe the scholarship focus and feature alumni. It must not
 carry an application form, a deadline, or "apply now" language for the new
 entity until IRS 4945(g) approval is received.
 
+## ⚠ /admin has no authentication yet
+
+Sign-in accepts anything, no password is checked, and `/admin` is directly
+reachable. This is deliberate, so the dashboard can be reviewed. It is safe only
+while **both** of these hold:
+
+1. Vercel deployment protection covers every URL that serves the site. It is
+   currently `all_except_custom_domains` — so attaching a custom domain leaves
+   the admin wide open.
+2. The submissions shown are invented. `lib/admin-sample.ts` holds fabricated
+   records; no real applicant data is stored anywhere yet.
+
+Replace it with Supabase Auth enforced in Next.js middleware before either
+changes. The real thing holds applicants' revenue figures, co-investor names and
+personal capital positions. Delete the demo path entirely rather than leaving a
+bypass in the codebase.
+
 ## Layout
 
 ```

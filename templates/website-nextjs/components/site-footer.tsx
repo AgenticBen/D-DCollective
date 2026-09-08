@@ -12,6 +12,11 @@ export function SiteFooter() {
             D+D Collective is the private philanthropy of Eric and Michele Dudley, working in Charlotte,
             North Carolina and East Africa.
           </p>
+          <p className="mt-6">
+            <Link href="/admin/login" className="text-[0.8rem] text-ink/50 no-underline hover:underline">
+              Admin sign in
+            </Link>
+          </p>
         </div>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[0.9rem] sm:flex-col">

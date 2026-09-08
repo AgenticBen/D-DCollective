@@ -16,7 +16,16 @@ export function SiteFooter() {
         gridTemplateColumns: 'minmax(220px,1fr) repeat(auto-fit,minmax(140px,max-content))'
       }}>
         <div>
-          <ThemedLogo kind="lockup" height={30} />
+          {/* The lockup artwork carries its own white ground, which showed as a
+              hard rectangle against the mist footer. Sitting it in a white card
+              makes that ground read as intentional. */}
+          <span style={{
+            display: 'inline-block', background: '#FFFFFF',
+            borderRadius: 'var(--radius-tile)', padding: '10px 14px',
+            border: '1px solid var(--border-hairline)'
+          }}>
+            <ThemedLogo kind="lockup" height={30} />
+          </span>
           <p style={{ margin: '14px 0 0', fontSize: 13.5, color: 'var(--text-muted)', maxWidth: '40ch' }}>
             Expanding leadership pathways toward the restoration of shalom.
           </p>

@@ -14,7 +14,7 @@ function Spotlight({ event }: { event: Event }) {
     <section
       aria-labelledby="spotlight"
       style={{
-        background: 'var(--surface-sunken)', border: 'var(--border-1)',
+        background: 'var(--surface-accent)', border: '1px solid var(--teal)',
         borderRadius: 'var(--radius-card)', padding: '28px'
       }}
     >
@@ -54,6 +54,9 @@ function EventRow({ event, muted = false }: { event: Event; muted?: boolean }) {
           {formatEventDate(event.date)}
         </div>
         <div style={{ fontSize: 'var(--fs-tile)', marginTop: 4 }}>{event.location}</div>
+        {event.kind ? (
+          <div style={{ fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', marginTop: 4 }}>{event.kind}</div>
+        ) : null}
       </div>
       <div>
         <h3 style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)', margin: '0 0 6px' }}>{event.title}</h3>
@@ -62,7 +65,6 @@ function EventRow({ event, muted = false }: { event: Event; muted?: boolean }) {
         </p>
       </div>
       <div style={{ display: 'grid', gap: 10, justifyItems: 'end' }}>
-        {event.kind ? <Pill>{event.kind}</Pill> : null}
         {muted ? null : <ButtonLink href="/apply" variant="secondary" size="sm">Request an invitation</ButtonLink>}
       </div>
     </div>

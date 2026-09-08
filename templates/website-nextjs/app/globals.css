@@ -32,9 +32,15 @@
 
   --grad: linear-gradient(135deg, #4BCECE 0%, #2A8FA8 100%);
 
-  --warn-bg: #FFF6E8;
-  --warn-ink: #8A5A00;
-  --warn-line: #F2D29B;
+  /* Advisory. Solid enough to read as deliberate rather than a wash, but it
+     still must not compete with the teal for attention. */
+  --warn-bg: #F4E7CD;
+  --warn-ink: #6B4708;
+  --warn-line: #C99A3E;
+
+  /* The spotlight surface: a fuller teal than --mist, which was too faint to
+     mark the next gathering as different. */
+  --surface-accent: #CFE7E7;
 
   --text-strong: var(--ink);
   --text-body: var(--slate);
@@ -88,14 +94,16 @@
   :root:not([data-theme="light"]) {
     --ink: #F2F6F7; --slate: #D5DEE3; --muted: #98A8B2;
     --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
-    --warn-bg: #2A1F0B; --warn-ink: #F2C97A; --warn-line: #5A4212;
+    --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
+    --surface-accent: #16302F;
     --text-accent: var(--teal);
   }
 }
 :root[data-theme="dark"] {
   --ink: #F2F6F7; --slate: #D5DEE3; --muted: #98A8B2;
   --bg: #0A0A0A; --mist: #101B1D; --line: #22383C; --card: #131F22;
-  --warn-bg: #2A1F0B; --warn-ink: #F2C97A; --warn-line: #5A4212;
+  --warn-bg: #2F2410; --warn-ink: #F0C97E; --warn-line: #7A5A1C;
+  --surface-accent: #16302F;
   --text-accent: var(--teal);
 }
 
@@ -162,4 +170,26 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .logo-light { display: none; }
   :root:not([data-theme="light"]) .logo-dark { display: block; }
+}
+
+@layer components {
+  /* The hero's dark ground. Deep teal rather than a neutral slate, so the
+     departure from the white editorial pages still reads as D+D. */
+  .hero-dark { background: #123239; color: #F2F6F7; }
+  .hero-dark .hero-accent { color: var(--logo-teal-light); font-style: italic; }
+
+  /* Portfolio cards drift gently behind the headline. Each card sets its own
+     --float-delay and --float-duration so they never move in lockstep. */
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .hero-card {
+    animation: heroFloat var(--float-duration, 7s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-card { animation: none; }
+  }
 }

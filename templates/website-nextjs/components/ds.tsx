@@ -119,8 +119,10 @@ export function Quote({ children, cite }: { children: ReactNode; cite?: ReactNod
 export function Note({ label, children }: { label?: ReactNode; children: ReactNode }) {
   return (
     <div style={{
-      background: 'var(--warn-bg)', border: '1px solid var(--warn-line)', color: 'var(--warn-ink)',
-      borderRadius: 'var(--radius-note)', padding: 'var(--pad-note)', fontSize: 'var(--fs-meta)'
+      background: 'var(--warn-bg)', color: 'var(--warn-ink)',
+      borderLeft: '3px solid var(--warn-line)',
+      borderRadius: '0 var(--radius-note) var(--radius-note) 0',
+      padding: '12px 16px', fontSize: 'var(--fs-meta)'
     }}>
       {label ? <strong style={{ fontWeight: 'var(--fw-semibold)' }}>{label} </strong> : null}
       {children}

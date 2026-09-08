@@ -1,3 +1,7 @@
+/** The hero line, kept short so the drifting cards have room either side. */
+export const heroSubtitle =
+  'A family philanthropy backing leaders from communities that have been marginalized, overlooked, or underestimated — through grants, redemptive investing, mentorship and convening.';
+
 export const mission = 'Expanding leadership pathways toward the restoration of shalom.';
 
 export const intro =

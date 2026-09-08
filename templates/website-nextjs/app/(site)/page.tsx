@@ -1,31 +1,45 @@
 import Link from 'next/link';
 import {
-  ButtonLink, Card, Eyebrow, GradientRule, Quote, SectionHeader, ThemedLogo
+  ButtonLink, Card, Eyebrow, GradientRule, Quote, SectionHeader
 } from '@/components/ds';
-import { mission, intro, pathways, fitYes, fitNo } from '@/content/home';
+import { HeroGutter } from '@/components/hero-cards';
+import { getPortfolio } from '@/lib/data';
+import { heroSubtitle, mission, intro, pathways, fitYes, fitNo } from '@/content/home';
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const portfolio = await getPortfolio();
+  const left = portfolio.slice(0, 3);
+  const right = portfolio.slice(3, 6);
+
   return (
     <>
-      <section style={{ background: 'var(--surface-sunken)', borderBottom: 'var(--border-1)' }}>
-        <div className="mx-auto grid max-w-container items-center gap-12 px-7 pb-16 pt-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-          <div>
+      <section className="hero-dark overflow-hidden">
+        <div className="mx-auto grid max-w-[1400px] items-center gap-8 px-7 py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] lg:py-24">
+          <HeroGutter holdings={left} />
+
+          <div className="text-center">
             <Eyebrow>Impact investing &amp; foundation</Eyebrow>
             <h1 style={{
-              fontSize: 'var(--fs-h1)', fontWeight: 'var(--fw-semibold)',
+              fontSize: 'clamp(34px,5vw,60px)', fontWeight: 'var(--fw-semibold)',
               letterSpacing: 'var(--ls-h1)', lineHeight: 'var(--lh-tight)',
-              margin: '10px 0 14px', textWrap: 'balance'
-            }}>{mission}</h1>
-            <GradientRule style={{ margin: '0 0 18px' }} />
-            <p style={{ color: 'var(--text-body)', maxWidth: 'var(--measure-lede)', margin: '0 0 26px' }}>{intro}</p>
-            <div className="flex flex-wrap gap-3">
+              margin: '14px 0 0', textWrap: 'balance'
+            }}>
+              Expanding leadership pathways toward the{' '}
+              <span className="hero-accent">restoration of shalom</span>
+            </h1>
+            <GradientRule palette="brand" style={{ margin: '22px auto' }} />
+            <p className="mx-auto" style={{ maxWidth: '46ch', color: '#D5DEE3', margin: '0 auto 26px' }}>
+              {heroSubtitle}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
               <ButtonLink href="/changemakers">Meet the changemakers</ButtonLink>
               <ButtonLink href="/how-we-work" variant="secondary">How we work</ButtonLink>
             </div>
           </div>
-          <div className="hidden justify-self-center lg:grid" style={{ placeItems: 'center', width: 300, height: 300 }}>
-            <ThemedLogo kind="mark" height={200} alt="" />
-          </div>
+
+          <HeroGutter holdings={right} offset={3} />
         </div>
       </section>
 

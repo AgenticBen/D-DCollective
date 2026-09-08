@@ -40,7 +40,23 @@ description should be in their own words. `consentReceivedAt` gates rendering in
 both the data layer and the Supabase row-level-security policy. A row with a
 null consent date must never render.
 
-### Publishing content
+### The MCP server
+
+`/api/mcp` exposes content tools so events and the reading list can be managed
+conversationally: `list_events`, `create_event`, `update_event`, `publish_event`,
+`delete_event`, `list_resources`, `create_resource`.
+
+It holds **no service-role key**. Every request authenticates as a real staff
+member and the Supabase client carries that identity into row-level security, so
+the tools can only do what that person could do. That is why the MCP cannot read
+`grant_submissions` or `investment_submissions` — those tables carry no policy,
+so an authenticated session gets nothing back. Verified, not assumed.
+
+The bearer credential is either a Supabase access token or `email:password`;
+the latter exists because access tokens expire after an hour and an MCP config
+is static. Revoke access by changing the password or disabling the user.
+
+## Publishing content
 
 Content lives in Supabase (project `dd-collective`), not in git. `lib/data.ts`
 holds types and accessors only.

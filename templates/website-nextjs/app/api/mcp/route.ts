@@ -189,6 +189,66 @@ const handler = createMcpHandler(
     );
 
     server.registerTool(
+      'list_partners',
+      {
+        description:
+          'List partner organizations: slug, name, region, whether a logo is set, and whether the public can ' +
+          'see them. A partner is only visible to visitors when it is published AND has a consent date.',
+        inputSchema: {}
+      },
+      async (_args, ctx) => {
+        const supabase = clientForSession(tokenOf(ctx));
+        const { data, error } = await supabase
+          .from('partners')
+          .select('slug,name,region,logo_url,is_published,consent_received_at')
+          .order('region')
+          .order('sort_order');
+        if (error) return say(`Could not list partners: ${error.message}`);
+        if (!data?.length) return say('No partners yet.');
+        return say(
+          data
+            .map((p) => {
+              const visible = p.is_published && p.consent_received_at ? 'public' : 'draft';
+              return `${p.slug} · ${p.name} · ${p.region} · logo: ${p.logo_url ?? 'none'} · ${visible}`;
+            })
+            .join('\n')
+        );
+      }
+    );
+
+    server.registerTool(
+      'set_partner_logo',
+      {
+        description:
+          "Point a partner at its logo. Use a path under /partners for a file dropped in public/partners, " +
+          'or a full https URL the organization has given you. Pass null to clear it.',
+        inputSchema: {
+          slug: z.string().min(1),
+          logo_url: z.string().nullable().describe('e.g. /partners/braveworks.png, or a full https URL')
+        }
+      },
+      async (args, ctx) => {
+        const { slug, logo_url } = args as { slug: string; logo_url: string | null };
+        if (logo_url && !/^(\/|https:\/\/)/.test(logo_url)) {
+          return say(`"${logo_url}" is not usable. Give a path starting with / or a full https URL.`);
+        }
+        const supabase = clientForSession(tokenOf(ctx));
+        const { data, error } = await supabase
+          .from('partners')
+          .update({ logo_url })
+          .eq('slug', slug)
+          .select('slug,name');
+        if (error) return say(`Could not update ${slug}: ${error.message}`);
+        if (!data?.length) return say(`No partner with the slug "${slug}".`);
+        return say(
+          logo_url
+            ? `${data[0].name} now uses ${logo_url}. If it is a local path, the file must exist in public${logo_url}.`
+            : `Cleared the logo for ${data[0].name}; the card falls back to a monogram.`
+        );
+      }
+    );
+
+    server.registerTool(
       'list_resources',
       {
         description: 'List the reading list shown under "Worth reading" on the Events page.',
@@ -242,8 +302,8 @@ const handler = createMcpHandler(
   {
     serverInfo: { name: 'dd-collective', version: '1.0.0' },
     instructions:
-      'Content tools for the D+D Collective website: events and the reading list. Grant and investment ' +
-      'submissions are deliberately unreachable from here.'
+      'Content tools for the D+D Collective website: events, the reading list, and partner logos. Grant ' +
+      'and investment submissions are deliberately unreachable from here.'
   }
 );
 

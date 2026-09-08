@@ -128,7 +128,10 @@ export function Note({ label, children }: { label?: ReactNode; children: ReactNo
   );
 }
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+/* 'outline' is site-specific, not from the design system: a white fill with a
+   teal-deep rule, for buttons sitting on the mist footer where a transparent
+   secondary would not read as a control. */
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 const BASE: CSSProperties = {
@@ -144,6 +147,7 @@ const SIZES: Record<ButtonSize, CSSProperties> = {
 };
 function skin(variant: ButtonVariant): CSSProperties {
   if (variant === 'primary') return { background: 'var(--teal-deep)', color: 'var(--text-on-accent)', border: '1px solid var(--teal-deep)' };
+  if (variant === 'outline') return { background: '#FFFFFF', color: 'var(--teal-deep)', border: '2px solid var(--teal-deep)' };
   if (variant === 'secondary') return { background: 'transparent', color: 'var(--text-accent)', border: '1px solid var(--teal)' };
   return { background: 'transparent', color: 'var(--text-accent)', border: '1px solid transparent', padding: '6px 4px', borderRadius: 0 };
 }

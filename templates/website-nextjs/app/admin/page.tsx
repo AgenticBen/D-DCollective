@@ -1,4 +1,3 @@
-import { AdminDemoNotice } from '@/components/admin-demo-notice';
 import { gateFailure, getSubmissions, type Submission } from '@/lib/admin-sample';
 
 function Stat({ label, value, note }: { label: string; value: number; note: string }) {
@@ -37,8 +36,6 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="mx-auto grid max-w-container gap-10 px-6 py-10">
-      <AdminDemoNotice />
-
       <header>
         <p className="text-[0.75rem] uppercase tracking-[0.08em] text-accent">Submissions</p>
         <h1 className="mt-2 text-[2.2rem] leading-tight">Survey results</h1>

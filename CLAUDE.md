@@ -61,6 +61,43 @@ The site may describe the scholarship focus and feature alumni. It must not
 carry an application form, a deadline, or "apply now" language for the new
 entity until IRS 4945(g) approval is received.
 
+## /admin authentication
+
+Real auth, via Supabase Auth. Sessions are cookie-based (`@supabase/ssr`) and
+`/admin` is gated in `middleware.ts` — server-side, against a validated JWT,
+never by conditional rendering in a client component.
+
+Two rules that are easy to get wrong:
+
+- Use `supabase.auth.getClaims()` in server code. **Never** `getSession()`: the
+  cookie can be spoofed and `getSession()` does not revalidate the token.
+- There is no public sign-up route and no sign-up UI. Accounts are created by
+  hand in the Supabase dashboard.
+
+Credentials live in Supabase, never in this repository. Do not hard-code an
+email or password anywhere in the tree — it is public.
+
+## Publishing content
+
+Content lives in Supabase (project `dd-collective`), not in git. `lib/data.ts`
+holds types and accessors only.
+
+Partners and portfolio holdings are loaded but **unpublished**: the design's own
+source says the descriptions are drafts to be replaced with copy each
+organization writes about itself, and urls stay null until they confirm. A
+partner appears on the site only when `is_published` is true AND
+`consent_received_at` is set — enforced by the row-level-security policy, not
+just by app code. Events and resources are D+D's own content and are published.
+
+Pages revalidate every 60 seconds, so publishing a row shows up without a
+redeploy.
+
+### Scholarships: 4945(g) approval is pending
+
+The site may describe the scholarship focus and feature alumni. It must not
+carry an application form, a deadline, or "apply now" language for the new
+entity until IRS 4945(g) approval is received.
+
 ## ⚠ /admin has no authentication yet
 
 Sign-in accepts anything, no password is checked, and `/admin` is directly

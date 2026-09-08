@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { signOut } from '@/app/admin/actions';
 
 export const metadata: Metadata = {
   title: 'Admin — D+D Collective',
@@ -7,15 +8,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * Admin chrome. Deliberately outside the (site) route group so the public nav
- * and footer do not appear here.
- *
- * There is NO authentication yet: /admin/login accepts anything and /admin is
- * directly reachable. That is intentional for review, and it is safe only while
- * two things stay true — Vercel deployment protection covers every URL that
- * serves this, and the submissions shown are invented. It must be replaced with
- * Supabase Auth in middleware before a custom domain is attached or a real
- * application is stored. See components/admin-demo-notice.tsx.
+ * Admin chrome, deliberately outside the (site) route group so the public nav
+ * and footer do not appear here. Access is gated in middleware against a
+ * validated JWT, server-side — never by conditional rendering here.
  */
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,9 +25,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               Admin
             </span>
           </div>
-          <Link href="/admin/login" className="text-[0.9rem] text-accent no-underline hover:underline">
-            Sign out
-          </Link>
+          <form action={signOut}>
+            <button type="submit" className="text-[0.9rem] text-accent underline-offset-2 hover:underline">
+              Sign out
+            </button>
+          </form>
         </div>
       </header>
       <main id="main" className="flex-1">{children}</main>

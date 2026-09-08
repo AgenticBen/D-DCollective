@@ -21,7 +21,7 @@ export function SiteFooter() {
             Expanding leadership pathways toward the restoration of shalom.
           </p>
           <span style={{ display: 'block', marginTop: 16 }}>
-            <Link href="/admin/login" style={buttonStyle('primary', 'sm')}>Admin sign in</Link>
+            <Link href="/admin/login" style={buttonStyle('outline', 'md')}>Admin sign in</Link>
             <span style={{ display: 'block', fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', marginTop: 10 }}>
               Staff only. Survey results are read here.
             </span>

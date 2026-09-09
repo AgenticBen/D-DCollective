@@ -58,6 +58,23 @@ export interface Organization {
   consentReceivedAt: string | null;
 }
 
+export interface Person {
+  slug: string;
+  name: string;
+  /** How they introduce themselves: a role, a course of study, what they build. */
+  role: string | null;
+  /** Two or three sentences, in the person's own words. */
+  bio: string;
+  /** The organization they are with, when there is one. Shown under the card. */
+  affiliation: string | null;
+  affiliationUrl: string | null;
+  /** Consented portrait. Null renders a labelled slot, never a stock face. */
+  photoUrl: string | null;
+  photoAlt: string | null;
+  /** ISO 8601 date consent was received. Null means this entry never renders. */
+  consentReceivedAt: string | null;
+}
+
 export interface PortfolioHolding {
   slug: string;
   name: string;
@@ -177,6 +194,72 @@ export async function getOrganizationsByRegion(): Promise<Array<{ region: Region
     label: REGION_LABELS[region],
     organizations: all.filter((o) => o.region === region)
   })).filter((group) => group.organizations.length > 0);
+}
+
+const PERSON_COLUMNS =
+  'slug,name,role,bio,affiliation,affiliation_url,photo_url,photo_alt,consent_received_at';
+
+type PersonRow = {
+  slug: string; name: string; role: string | null; bio: string | null;
+  affiliation: string | null; affiliation_url: string | null;
+  photo_url: string | null; photo_alt: string | null; consent_received_at: string | null;
+};
+
+const toPerson = (r: PersonRow): Person => ({
+  slug: r.slug,
+  name: r.name,
+  role: r.role,
+  bio: r.bio ?? '',
+  affiliation: r.affiliation,
+  affiliationUrl: r.affiliation_url,
+  photoUrl: r.photo_url,
+  photoAlt: r.photo_alt,
+  consentReceivedAt: r.consent_received_at
+});
+
+/** Only published people with a consent date are ever returned. */
+export async function getPeople(): Promise<Person[]> {
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('people')
+    .select(PERSON_COLUMNS)
+    .order('sort_order')
+    .order('name');
+  return emptyOnMissingConfig(data as PersonRow[] | null).map(toPerson);
+}
+
+/**
+ * The same people, read as the signed-in staff member when there is one.
+ *
+ * Same bargain as the partners: anonymous visitors get only what row-level
+ * security allows — published, with a real consent date — while staff see every
+ * row so a profile can be reviewed and sent to the person before they are asked
+ * to approve it. Rows the public cannot see come back flagged, and the card
+ * marks them. No consent date is ever invented to make a card appear.
+ */
+export async function getPeopleForViewer(): Promise<{
+  people: Person[];
+  isStaff: boolean;
+  draftSlugs: Set<string>;
+}> {
+  const { createClient } = await import('@/lib/auth/server');
+  const authed = await createClient();
+  const { data: claimData } = await authed.auth.getClaims();
+  const isStaff = Boolean(claimData?.claims);
+
+  if (!isStaff) return { people: await getPeople(), isStaff: false, draftSlugs: new Set() };
+
+  const { data } = await authed
+    .from('people')
+    .select(`${PERSON_COLUMNS},is_published`)
+    .order('sort_order')
+    .order('name');
+
+  const rows = (data ?? []) as Array<PersonRow & { is_published: boolean }>;
+  const draftSlugs = new Set(
+    rows.filter((r) => !r.is_published || !r.consent_received_at).map((r) => r.slug)
+  );
+  return { people: rows.map(toPerson), isStaff: true, draftSlugs };
 }
 
 export async function getPortfolio(): Promise<PortfolioHolding[]> {

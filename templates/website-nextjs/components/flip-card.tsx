@@ -11,8 +11,8 @@ import { useMemo, useState, type ReactNode } from 'react';
  * a plain swap.
  */
 export function FlipCard({
-  label, front, back, height = 208
-}: { label: string; front: ReactNode; back: ReactNode; height?: number }) {
+  label, front, back, height = 208, frontBleed = false
+}: { label: string; front: ReactNode; back: ReactNode; height?: number; frontBleed?: boolean }) {
   const [flipped, setFlipped] = useState(false);
   const reduced = useMemo(
     () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
@@ -43,7 +43,12 @@ export function FlipCard({
         transition: reduced ? 'none' : 'transform 460ms cubic-bezier(.2,0,.2,1)',
         transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
       }}>
-        <div style={{ ...face, ...fade, background: 'var(--surface-sunken)', opacity: flipped ? 0 : 1, visibility: flipped ? 'hidden' : 'visible' }}>
+        <div style={{
+          ...face, ...fade, background: 'var(--surface-sunken)',
+          /* A portrait runs to the card edge; the caption below it carries its own padding. */
+          padding: frontBleed ? 0 : face.padding,
+          opacity: flipped ? 0 : 1, visibility: flipped ? 'hidden' : 'visible'
+        }}>
           {front}
         </div>
         <div style={{

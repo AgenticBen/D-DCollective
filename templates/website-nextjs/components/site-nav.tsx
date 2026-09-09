@@ -12,7 +12,7 @@ const links = [
   { href: '/how-we-work', label: 'How We Work' },
   { href: '/changemakers', label: 'Changemakers' },
   { href: '/gather', label: 'Events' },
-  { href: '/about', label: 'Eric & Michele' }
+  { href: '/about', label: 'About' }
 ];
 
 export function SiteNav() {

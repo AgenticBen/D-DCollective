@@ -12,8 +12,8 @@ import { Note, buttonStyle } from '@/components/ds';
  * actually kept: the description arrives in their own words, and consent is
  * theirs to tick rather than ours to record on their behalf.
  *
- * A submission lands unpublished. Consent lets the profile render; Eric and
- * Michele decide when it does. Both are needed, and this page says so plainly
+ * A submission lands unpublished. Consent lets the profile render; Michele
+ * and Eric decide when it does. Both are needed, and this page says so plainly
  * rather than implying the form puts them on the website.
  */
 const LABELS: Record<string, string> = {
@@ -86,7 +86,7 @@ export default function ProfilePage() {
       <Submitted>
         <p>Thank you — your profile is with us, in your words.</p>
         <p className="mt-4">
-          It is not on the website yet. Eric and Michele read each one before it goes up, and you will hear
+          It is not on the website yet. Michele and Eric read each one before it goes up, and you will hear
           from them before it does. If you want to change anything, or take it down later, reply to the
           person who sent you this link and it comes down.
         </p>
@@ -104,7 +104,7 @@ export default function ProfilePage() {
         <div className="mt-6 max-w-measure">
           <Note label="Nothing publishes on its own:">
             Ticking the box below is your permission — without it we publish nothing. It is not the same as
-            going live: Eric and Michele review each profile first, and you will hear from them before yours
+            going live: Michele and Eric review each profile first, and you will hear from them before yours
             appears. You can change or withdraw it at any time.
           </Note>
         </div>

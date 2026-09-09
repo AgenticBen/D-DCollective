@@ -5,7 +5,7 @@
 export const flags = {
   /**
    * Show "at market / above market / concessionary" next to each portfolio
-   * holding. Off until Eric and Michele decide whether to publish posture.
+   * holding. Off until Michele and Eric decide whether to publish posture.
    */
   showReturnPosture: false
 } as const;

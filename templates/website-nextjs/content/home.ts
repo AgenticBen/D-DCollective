@@ -5,7 +5,7 @@ export const heroSubtitle =
 export const mission = 'Expanding leadership pathways toward the restoration of shalom.';
 
 export const intro =
-  'We are Eric and Michele Dudley. D+D Collective is our family philanthropy: small, relational, and run by the two of us rather than a staff. We give grants, make redemptive investments, fund scholarships through partner organizations, and put people in rooms together — in Charlotte, in East Africa, and among a national and global network of leaders we have come to trust.';
+  'We are Michele and Eric Dudley. D+D Collective is our family philanthropy: small, relational, and run by the two of us rather than a staff. We give grants, make redemptive investments, fund scholarships through partner organizations, and put people in rooms together. Our giving is concentrated in Charlotte and East Africa, though not all of it goes there. The investments follow the mission rather than the map, and most of them are somewhere else entirely.';
 
 export const pathways = [
   {
@@ -33,9 +33,9 @@ export const pathways = [
 
 export const fitYes = [
   'Leaders from the communities the work serves.',
-  'Work concentrated in Charlotte and North Carolina, or in East Africa.',
+  'Grant-seekers working in Charlotte and North Carolina, or in East Africa.',
   'Organizations where a first conversation would be useful even if a gift is years away.',
-  'Founders and fund managers who have their own capital in the deal.'
+  'Founders and fund managers who have their own capital in the deal, wherever they are.'
 ];
 
 export const fitNo = [

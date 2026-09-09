@@ -10,7 +10,7 @@ import { supabaseAdmin, PHOTO_BUCKET } from '@/lib/supabase-admin';
  *
  * The row lands with is_published false and consent_received_at set from the
  * person's own tick. Those are two different keys and both are needed: their
- * consent, and a decision by Eric or Michele to publish. Neither one alone puts
+ * consent, and a decision by Michele or Eric to publish. Neither one alone puts
  * a face on the website.
  *
  * The email goes to a separate table with no public policy. Row-level security

@@ -20,7 +20,7 @@ export const levers = [
   {
     term: 'Redemptive investing',
     gloss:
-      'Capital into funds and companies that are built to return something real to the people they touch, and not only to the people who own them.'
+      'Capital into funds and companies that are built to return something real to the people they touch, and not only to the people who own them. This is the part of the work that is not bound to a place — most of the portfolio is outside the two geographies our giving concentrates on.'
   },
   {
     term: 'Activation of capital',

@@ -30,7 +30,7 @@ export default async function ChangemakersPage() {
       <SectionHeader
         level={1}
         title="Changemakers"
-        lede="Founders, scholars, builders and mentors — in Charlotte, in East Africa, and across a network we have come to trust. Every description on this page was written by the person it describes. Ours too."
+        lede="Founders, scholars, builders and mentors — in Charlotte and East Africa, and well beyond both. Every description on this page was written by the person it describes. Ours too."
       />
 
       {isStaff && draftSlugs.size > 0 ? (

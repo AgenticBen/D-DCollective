@@ -110,7 +110,14 @@ export interface Resource {
 
 const emptyOnMissingConfig = <T,>(rows: T[] | null): T[] => rows ?? [];
 
-/** Only published organizations with a consent date are ever returned. */
+/**
+ * Nothing renders organizations right now: /changemakers is people only, and
+ * the partner cards were retired with the tabs. The accessors stay because the
+ * rows stay — unpublished — and bringing the surface back should not mean
+ * rewriting the data layer.
+ *
+ * Only published organizations with a consent date are ever returned.
+ */
 export async function getOrganizations(region?: Region): Promise<Organization[]> {
   if (!supabase) return [];
   let q = supabase

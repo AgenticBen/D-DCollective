@@ -4,7 +4,7 @@ import { ThemedLogo, buttonStyle } from '@/components/ds';
 /** Mirrors the design system's SiteFooter, including the admin link beneath the logo. */
 const columns = [
   { title: 'About', links: [['Mission & Vision', '/mission'], ['How We Work', '/how-we-work'], ['Eric & Michele', '/about']] },
-  { title: 'Changemakers', links: [['Partners', '/changemakers'], ['Portfolio', '/changemakers']] },
+  { title: 'Changemakers', links: [['The people', '/changemakers']] },
   { title: 'Connect', links: [['Grantees', '/apply/grants'], ['Investors', '/apply/investment'], ['Gatherings', '/gather']] }
 ] as const;
 

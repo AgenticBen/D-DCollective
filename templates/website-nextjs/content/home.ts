@@ -17,8 +17,8 @@ export const pathways = [
   },
   {
     verb: 'We invest',
-    href: '/changemakers#portfolio',
-    cta: 'See the portfolio and how it is read',
+    href: '/how-we-work',
+    cta: 'How we read an investment',
     body:
       'Redemptive investments across funds and direct deals, read along the Praxis spectrum from exploitative to ethical to redemptive. Founder or GP capital in the deal is the signal we weigh most heavily. Return postures range from concessionary to above market, and we say which is which.'
   },

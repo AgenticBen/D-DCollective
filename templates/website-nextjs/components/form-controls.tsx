@@ -101,6 +101,29 @@ export function TextAreaField({
   );
 }
 
+export function FileField({
+  name, label, hint, errors, required, accept
+}: BaseFieldProps & { accept?: string }) {
+  const { messages, errorId, hintId, invalid } = useFieldIds(name, errors);
+  return (
+    <div style={fieldWrap}>
+      <label style={labelStyle} htmlFor={name}>{label}{required ? <Required /> : null}</label>
+      <input
+        id={name} name={name} type="file" accept={accept}
+        aria-invalid={invalid || undefined}
+        aria-describedby={[hint ? hintId : null, invalid ? errorId : null].filter(Boolean).join(' ') || undefined}
+        className="file:mr-3 file:cursor-pointer file:rounded-note file:border-0 file:bg-mist file:px-3 file:py-1.5 file:text-inherit"
+        style={{
+          ...inputSkin, padding: '8px 10px',
+          borderColor: invalid ? 'var(--warn-line)' : undefined
+        }}
+      />
+      {hint ? <div style={hintStyle} id={hintId}>{hint}</div> : null}
+      <ErrorText id={errorId} messages={messages} />
+    </div>
+  );
+}
+
 export type Choice = { value: string; label: string; note?: string };
 
 export function ChoiceField({

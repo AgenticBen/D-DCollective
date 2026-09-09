@@ -47,3 +47,32 @@ create policy people_staff_write on public.people
   to authenticated
   using (auth.uid() is not null)
   with check (auth.uid() is not null);
+
+-- Emails from the profile form live here, NOT on `people`.
+--
+-- Row-level security gates rows, not columns: an address stored on `people`
+-- would be readable by anyone the moment the profile was published. This table
+-- carries no policy at all, which is what makes it unreachable — the same way
+-- grant_submissions and investment_submissions are. Reachable only with the
+-- secret key, from a server route handler.
+create table if not exists public.people_contact (
+  slug        text primary key references public.people(slug) on delete cascade,
+  email       text not null,
+  created_at  timestamptz not null default now()
+);
+
+alter table public.people_contact enable row level security;
+-- Deliberately no policy. Do not add one.
+
+-- Portraits people upload for their own profile. Public read: the images are
+-- published on the site, and a signed URL that expires would break the page.
+-- Nothing is written here except by the route handler holding the secret key.
+insert into storage.buckets (id, name, public)
+values ('people-photos', 'people-photos', true)
+on conflict (id) do nothing;
+
+drop policy if exists people_photos_public_read on storage.objects;
+create policy people_photos_public_read on storage.objects
+  for select
+  to anon, authenticated
+  using (bucket_id = 'people-photos');

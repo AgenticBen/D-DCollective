@@ -78,7 +78,48 @@ export const investmentApplicationSchema = z.object({
 
 export type InvestmentApplication = z.infer<typeof investmentApplicationSchema>;
 
-/** Shape returned by both route handlers. */
+/**
+ * The changemaker's own profile, filled in by the person it describes.
+ *
+ * This is the mechanism behind the consent rule: the bio arrives in their own
+ * words, and consent is a field they tick rather than something recorded on
+ * their behalf. A submission lands unpublished — consent lets it render, staff
+ * decide when it does.
+ *
+ * Note what is absent, and keep it absent: no demographics, no faith
+ * alignment, no relationship to a grant or a holding. This describes a person
+ * as they wish to be described, nothing more.
+ */
+export const PHOTO_MAX_BYTES = 4 * 1024 * 1024;
+export const PHOTO_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+
+const optionalText = (max: number, label: string) =>
+  z.string().trim().max(max, `${label} is too long.`).optional().default('');
+
+export const profileSubmissionSchema = z.object({
+  name: required('Your name'),
+  email,
+  role: optionalText(120, 'That line'),
+  bio: z
+    .string()
+    .trim()
+    .min(1, 'A short description is required.')
+    .max(600, 'Please keep this to about three sentences — 600 characters or fewer.'),
+  affiliation: optionalText(160, 'The organization name'),
+  affiliationUrl: z
+    .union([z.string().trim().url('That does not look like a web address.'), z.literal('')])
+    .optional()
+    .default(''),
+  photoAlt: optionalText(200, 'The photo description'),
+  consent: z.literal('yes', {
+    errorMap: () => ({ message: 'We cannot publish anything about you without this.' })
+  }),
+  website: honeypot
+});
+
+export type ProfileSubmission = z.infer<typeof profileSubmissionSchema>;
+
+/** Shape returned by the route handlers. */
 export type ApplyResponse =
   | { ok: true }
   | { ok: false; reason: 'validation'; fieldErrors: Record<string, string[]> }

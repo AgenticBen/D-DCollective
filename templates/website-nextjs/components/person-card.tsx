@@ -41,9 +41,7 @@ function Portrait({ person }: { person: Person }) {
         fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-meta)',
         color: 'var(--text-muted)', textAlign: 'center', padding: '0 12px'
       }}>
-        Portrait
-        <br />
-        public/people/ · 4:5
+        Portrait to come
       </span>
     </span>
   );

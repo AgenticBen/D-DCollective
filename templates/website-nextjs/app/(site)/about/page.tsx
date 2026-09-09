@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { NextPage } from '@/components/next-page';
 import type { Metadata } from 'next';
+import { NextPage } from '@/components/next-page';
 import { SectionHeader } from '@/components/ds';
-import { PersonSection } from '@/components/person-section';
-import { title, intro, michele, eric, closing } from '@/content/about';
+import { title, intro, onTheChangemakersPage, closing } from '@/content/about';
 
 export const metadata: Metadata = { title: 'About — D+D Collective' };
 
@@ -16,10 +15,10 @@ export default function AboutPage() {
         <p key={p.slice(0, 24)} className="mt-5 max-w-measure text-body">{p}</p>
       ))}
 
-      <div className="mt-[var(--section-gap)] grid gap-[var(--section-gap)]">
-        <PersonSection person={michele} reverse />
-        <PersonSection person={eric} />
-      </div>
+      <p className="mt-5 max-w-measure text-body">
+        {onTheChangemakersPage}{' '}
+        <Link href="/changemakers" className="text-accent">Meet the changemakers</Link>.
+      </p>
 
       <p className="mt-[var(--section-gap)] max-w-measure text-body">{closing}</p>
       <NextPage href="/mission" label="Mission and values" />

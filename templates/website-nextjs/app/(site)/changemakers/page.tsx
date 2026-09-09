@@ -14,17 +14,23 @@ export const dynamic = 'force-dynamic';
  * One grid, no tabs. The people here came to us as partners, founders,
  * scholars and family, and sorting them into those buckets on the page tells
  * the visitor about our filing rather than about them.
+ *
+ * Two things here are deliberate and easy to undo by accident. The cards are
+ * uniform — no badge marking who is funded and who funds — and the order is
+ * alphabetical, because every row leaves sort_order at 0. Putting the family
+ * first, or tagging a card "Scholar", restores exactly the hierarchy this page
+ * is arranged to drop.
  */
 export default async function ChangemakersPage() {
   const { people, isStaff, draftSlugs } = await getPeopleForViewer();
 
   return (
     <div className="mx-auto max-w-container px-7 pb-20 pt-14">
+      {/* No eyebrow: it would only repeat the title. */}
       <SectionHeader
         level={1}
-        eyebrow="Changemakers"
-        title="The leaders we walk with"
-        lede="Founders, scholars, and people building something where they are. Select a card to read how each of them describes the work."
+        title="Changemakers"
+        lede="Founders, scholars, builders and mentors — in Charlotte, in East Africa, and across a network we have come to trust. Every description on this page was written by the person it describes. Ours too."
       />
 
       {isStaff && draftSlugs.size > 0 ? (

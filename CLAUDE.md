@@ -83,6 +83,20 @@ The site may describe the scholarship focus and feature alumni. It must not
 carry an application form, a deadline, or "apply now" language for the new
 entity until IRS 4945(g) approval is received.
 
+## Pre-launch gate (the site is not public yet)
+
+`middleware.ts` + `lib/site-gate.ts`:
+
+- **ddcollective.org / www** show `/under-construction` for every page until
+  `SITE_LIVE=true` is set in Vercel (Production) and the site is redeployed.
+- **Every other address** (`d-d-collective.vercel.app`, previews) asks for the
+  shared preview password in the `SITE_PASSWORD` env var. Changing it signs
+  everyone out.
+- `/admin` and `/api/*` are not gated; they keep their own sign-in.
+
+Do not remove the gate or set `SITE_LIVE` without Ben and Michele agreeing to
+launch.
+
 ## /admin authentication
 
 Real auth, via Supabase Auth. Sessions are cookie-based (`@supabase/ssr`) and

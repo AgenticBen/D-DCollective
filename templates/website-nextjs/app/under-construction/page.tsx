@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ThemedLogo, Eyebrow, GradientRule } from '@/components/ds';
+import { Logo, Eyebrow, GradientRule } from '@/components/ds';
 
 export const metadata: Metadata = {
   title: 'D+D Collective · Coming soon',
@@ -14,13 +14,9 @@ export default function UnderConstructionPage() {
       style={{ background: 'var(--hero-bg)' }}
     >
       <div className="grid max-w-lg justify-items-center gap-3">
-        {/* The lockup artwork has its own white ground; a white card makes it read as intentional. */}
-        <span style={{
-          display: 'inline-block', background: '#FFFFFF', borderRadius: 'var(--radius-tile)',
-          padding: '12px 18px', border: '1px solid var(--border-hairline)'
-        }}>
-          <ThemedLogo kind="lockup" height={52} />
-        </span>
+        {/* Transparent artwork so the logo sits straight on the tinted band, no white box. */}
+        <span className="logo-light"><Logo variant="lockup-transparent" height={52} /></span>
+        <span className="logo-dark"><Logo variant="lockup-dark-transparent" height={52} alt="" /></span>
         <Eyebrow style={{ marginTop: 28 }}>Coming soon</Eyebrow>
         <h1 className="section-title" style={{ color: 'var(--hero-ink)' }}>Our new site is under construction</h1>
         <GradientRule style={{ margin: '4px auto 0' }} />

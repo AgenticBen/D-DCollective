@@ -22,7 +22,7 @@ export default function UnderConstructionPage() {
         <GradientRule style={{ margin: '4px auto 0' }} />
         <p className="mt-2 text-[1.05rem]" style={{ color: 'var(--hero-lede)' }}>
           D+D Collective is expanding leadership pathways toward the restoration of shalom.
-          We&rsquo;re putting the finishing touches on this site. Please check back soon.
+          We&rsquo;re putting the finishing touches on this site, and we hope you will check back soon!
         </p>
       </div>
     </main>

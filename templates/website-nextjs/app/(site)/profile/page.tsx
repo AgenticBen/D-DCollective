@@ -84,10 +84,10 @@ export default function ProfilePage() {
   if (state === 'sent') {
     return (
       <Submitted>
-        <p>Thank you — your profile is with us, in your words.</p>
+        <p>Thank you! Your profile is with us, in your words.</p>
         <p className="mt-4">
           It is not on the website yet. Michele and Eric read each one before it goes up, and you will hear
-          from them before it does. If you want to change anything, or take it down later, reply to the
+          from them before it does. If you want to change anything, or take it down later, just reply to the
           person who sent you this link and it comes down.
         </p>
       </Submitted>
@@ -99,13 +99,13 @@ export default function ProfilePage() {
       <FormHeader
         eyebrow="Changemakers"
         title="Your profile, in your words"
-        lede="We would rather publish how you describe your work than how we describe it. This takes about five minutes."
+        lede="We would much rather publish how you describe your work than how we describe it. This takes about five minutes."
       >
         <div className="mt-6 max-w-measure">
           <Note label="Nothing publishes on its own:">
-            Ticking the box below is your permission — without it we publish nothing. It is not the same as
-            going live: Michele and Eric review each profile first, and you will hear from them before yours
-            appears. You can change or withdraw it at any time.
+            Ticking the box below is your permission, and without it we publish nothing. It is not the same
+            as going live - Michele and Eric read each profile first, and you will hear from them before
+            yours appears. You can change it or take it down at any time, whenever you like.
           </Note>
         </div>
       </FormHeader>
@@ -124,16 +124,16 @@ export default function ProfilePage() {
           />
           <TextField
             name="email" type="email" label={LABELS.email} required errors={fieldErrors}
-            hint="So we can reach you about the profile. It is never published."
+            hint="So we can reach you about your profile. We never publish it."
           />
           <TextField
             name="role" label={LABELS.role} errors={fieldErrors}
             placeholder="Founder · Aruwa Capital"
-            hint="A short line: a role, a course of study, what you are building. Leave it blank if you would rather not."
+            hint="A short line: a role, a course of study, what you are building. Leave it blank if you would prefer."
           />
           <TextAreaField
             name="bio" label={LABELS.bio} required errors={fieldErrors} rows={5}
-            hint="Two or three sentences, in the first person or the third — whichever sounds like you. About 600 characters."
+            hint="Two or three sentences, in the first person or the third - whichever sounds like you. About 600 characters."
           />
         </fieldset>
 
@@ -153,7 +153,7 @@ export default function ProfilePage() {
           <legend className="pb-1" style={{ fontSize: 'var(--fs-h3)', fontWeight: 'var(--fw-semibold)' }}>Your photograph</legend>
           <FileField
             name="photo" label={LABELS.photo} errors={fieldErrors} accept="image/jpeg,image/png,image/webp"
-            hint="A portrait you are happy to have published. JPEG, PNG or WebP, up to 4MB. Taller than it is wide works best. Send one later if you would rather — the card holds a space for it."
+            hint="A portrait you are happy to have published. JPEG, PNG or WebP, up to 4MB. Taller than it is wide works best. You can always send one later, and the card holds a space for it."
           />
           <TextField
             name="photoAlt" label={LABELS.photoAlt} errors={fieldErrors}

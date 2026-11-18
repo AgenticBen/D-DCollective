@@ -28,7 +28,7 @@ export const ErrorSummary = forwardRef<HTMLDivElement, { items: SummaryItem[] }>
               <a href={'#' + i.name} className="text-accent underline decoration-rule hover:decoration-accent">
                 {i.label}
               </a>
-              <span className="text-muted">{' — ' + i.message}</span>
+              <span className="text-muted">{' - ' + i.message}</span>
             </li>
           ))}
         </ul>

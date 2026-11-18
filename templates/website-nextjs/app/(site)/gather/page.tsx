@@ -7,7 +7,7 @@ import {
 } from '@/components/ds';
 import { getUpcomingEvents, getPastEvents, getResources, formatEventDate, type Event } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Events — D+D Collective' };
+export const metadata: Metadata = { title: 'Events · D+D Collective' };
 
 /** The next gathering, given the room it deserves. */
 function Spotlight({ event }: { event: Event }) {
@@ -84,7 +84,7 @@ export default async function GatherPage() {
         level={1}
         eyebrow="Events"
         title="Where we gather"
-        lede="Dinners, book discussions and convenings, mostly in Charlotte with a few online. The rooms are kept small on purpose, so there is nothing to register for — ask and we will tell you when invitations go out."
+        lede="Dinners, book discussions and convenings, mostly in Charlotte with a few online. We keep the rooms small on purpose, so there is nothing to register for. Just ask us and we will tell you when invitations go out."
       />
 
       {next ? <Spotlight event={next} /> : (

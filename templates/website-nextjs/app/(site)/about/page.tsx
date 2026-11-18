@@ -4,7 +4,7 @@ import { NextPage } from '@/components/next-page';
 import { SectionHeader } from '@/components/ds';
 import { title, intro, onTheChangemakersPage, closing } from '@/content/about';
 
-export const metadata: Metadata = { title: 'About — D+D Collective' };
+export const metadata: Metadata = { title: 'About · D+D Collective' };
 
 export default function AboutPage() {
   return (

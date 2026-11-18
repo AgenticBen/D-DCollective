@@ -39,9 +39,9 @@ const SECTIONS: Array<{ title: string; fields: string[] }> = [
 ];
 
 const SPECTRUM = [
-  { value: 'exploitative', label: 'Exploitative', note: 'The gain comes at someone’s expense — a supplier, an employee, a customer who does not have a real choice.' },
+  { value: 'exploitative', label: 'Exploitative', note: 'The gain comes at someone’s expense: a supplier, an employee, a customer who does not have a real choice.' },
   { value: 'ethical', label: 'Ethical', note: 'Nobody is harmed. Fair wages, honest terms, clean compliance. This is where most good companies sit.' },
-  { value: 'redemptive', label: 'Redemptive', note: 'The business gives up something it did not have to give — margin, control, ownership — so that the people it touches gain.' }
+  { value: 'redemptive', label: 'Redemptive', note: 'The business gives up something it did not have to give, like margin, control or ownership, so that the people it touches gain.' }
 ];
 
 export default function InvestmentFormPage() {
@@ -166,7 +166,7 @@ export default function InvestmentFormPage() {
             <TextField name="email" type="email" label={LABELS.email} required errors={fieldErrors} />
             <div className="py-5">
               <p className="max-w-measure border-l-2 border-accent bg-mist px-5 py-4 text-body">
-                Our angel and programme-related tier is post-revenue only. If you are pre-revenue, we are not
+                Our angel and program-related tier is post-revenue only. If you are pre-revenue, we are not
                 the right first call, and there is no point filling in the rest of this. Come back when you
                 have revenue and we will read it properly.
               </p>
@@ -196,7 +196,7 @@ export default function InvestmentFormPage() {
               options={[
                 { value: 'market-or-above', label: 'Market or above', note: '8% IRR and up.' },
                 { value: 'below-market', label: 'Below market', note: 'Between 0 and 7%.' },
-                { value: 'angel-pri', label: 'Angel or programme-related', note: 'Philanthropic capital, post-revenue only.' }
+                { value: 'angel-pri', label: 'Angel or program-related', note: 'Philanthropic capital, post-revenue only.' }
               ]}
             />
             <TextField
@@ -229,7 +229,7 @@ export default function InvestmentFormPage() {
               multiple
               errors={fieldErrors}
               options={[
-                { value: 'poc-led', label: 'Led by people of colour' },
+                { value: 'poc-led', label: 'Led by people of color' },
                 { value: 'women-led', label: 'Women-led' },
                 { value: 'faith-led', label: 'Faith-led' }
               ]}
@@ -271,7 +271,7 @@ export default function InvestmentFormPage() {
             <div className="py-5">
               <h3 className="section-title">The spectrum</h3>
               <p className="mt-3 max-w-measure text-body">
-                We read three parts of a business — strategy, operations and leadership — along one line.
+                We read three parts of a business along one line: strategy, operations and leadership.
                 Exploitative means the gain comes at someone’s expense. Ethical means nobody is harmed.
                 Redemptive means the business deliberately gives up something it did not have to give, so
                 that the people it touches gain. Most honest answers are ethical in some rows and redemptive

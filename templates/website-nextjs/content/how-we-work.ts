@@ -1,36 +1,36 @@
 export const title = 'How we work';
 
 export const intro =
-  'Two lists. The first is what we put money into. The second is what we do with our own time, which matters at least as much, because most of what we have to offer a leader is not a cheque.';
+  'Two lists. The first is what we put money into. The second is what we do with our own time, and it matters at least as much, because most of what we have to offer a leader is not a check.';
 
 export const fundingIntro =
-  'These are categories rather than steps. Nothing here happens first.';
+  'These are categories, not steps. Nothing here happens first.';
 
 export const levers = [
   {
     term: 'Scholarships and educational support',
     gloss:
-      'We pay for school through partner organizations who already know the students, rather than running a scholarship programme of our own.'
+      'We pay for school through partner organizations who already know the students. We do not run a scholarship program of our own.'
   },
   {
     term: 'Empowerment',
     gloss:
-      'Work with and for women, people of colour, and people who are blind or visually impaired. Mostly in Charlotte and in East Africa.'
+      'Work with and for women, people of color, and people who are blind or visually impaired. Mostly in Charlotte and in East Africa.'
   },
   {
     term: 'Redemptive investing',
     gloss:
-      'Capital into funds and companies that are built to return something real to the people they touch, and not only to the people who own them. This is the part of the work that is not bound to a place — most of the portfolio is outside the two geographies our giving concentrates on.'
+      'Capital into funds and companies built to return something real to the people they touch, and not only to the people who own them. This is the part of our work that is not tied to a place. Most of the portfolio sits outside the two geographies our giving concentrates on.'
   },
   {
     term: 'Activation of capital',
     gloss:
-      'Moving money that is sitting still. Grant money and investment money, put to work on the same mission instead of waiting in an account.'
+      'Moving money that is sitting still. Grant money and investment money, both put to work on the same mission while it waits in an account.'
   }
 ];
 
 export const practiceIntro =
-  'The part that does not show up on a grant report.';
+  'The part that never shows up on a grant report.';
 
 export const practices = [
   {

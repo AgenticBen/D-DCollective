@@ -5,7 +5,7 @@ import { VisionStatement } from '@/components/vision-statement';
 import { ValuesList } from '@/components/values-list';
 import { vision, shalomGloss, missionLine, missionBody, values, closing } from '@/content/mission';
 
-export const metadata: Metadata = { title: 'Mission — D+D Collective' };
+export const metadata: Metadata = { title: 'Mission · D+D Collective' };
 
 export default function MissionPage() {
   return (

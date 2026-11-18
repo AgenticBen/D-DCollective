@@ -82,8 +82,8 @@ export default async function HomePage() {
 
           <Card title="Whether this is a fit">
             <p style={{ margin: '0 0 16px', fontSize: 'var(--fs-tile)', color: 'var(--text-body)' }}>
-              We would rather you know quickly. If the second list describes you, a conversation is probably
-              not the best use of your week — and we would still rather say so here than after three emails.
+              We want you to know quickly. If the second list sounds like you, a conversation probably is not
+              the best use of your week. We would rather say that here, and save you three emails.
             </p>
             <Eyebrow style={{ marginBottom: 8 }}>Usually a fit</Eyebrow>
             <ul className="m-0 grid list-none gap-2 p-0" style={{ fontSize: 'var(--fs-tile)' }}>

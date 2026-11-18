@@ -4,7 +4,7 @@ import { Note, SectionHeader } from '@/components/ds';
 import { PersonCard } from '@/components/person-card';
 import { getPeopleForViewer } from '@/lib/data';
 
-export const metadata: Metadata = { title: 'Changemakers — D+D Collective' };
+export const metadata: Metadata = { title: 'Changemakers · D+D Collective' };
 
 /* Reads the visitor's session to decide whether drafts are visible, so this
    cannot be cached across viewers. */
@@ -30,13 +30,13 @@ export default async function ChangemakersPage() {
       <SectionHeader
         level={1}
         title="Changemakers"
-        lede="Founders, scholars, builders and mentors — in Charlotte and East Africa, and well beyond both. Every description on this page was written by the person it describes. Ours too."
+        lede="Founders, scholars, builders and mentors - in Charlotte and East Africa, and well beyond both. Every description on this page was written by the person it describes. Ours too."
       />
 
       {isStaff && draftSlugs.size > 0 ? (
         <div style={{ marginBottom: 24 }}>
           <Note label="Staff view:">
-            {draftSlugs.size} of these are drafts — not published, or with no consent recorded. Visitors do
+            {draftSlugs.size} of these are drafts - not published, or with no consent recorded. Visitors do
             not see them. Descriptions stay ours until the person sends their own.
           </Note>
         </div>
@@ -44,8 +44,8 @@ export default async function ChangemakersPage() {
 
       {people.length === 0 ? (
         <Note label="Awaiting content:">
-          Profiles appear here once each person has approved their own description and photograph. This
-          section is intentionally empty rather than filled with people who have not been asked.
+          Profiles appear here once each person has approved their own description and photograph. We would
+          rather leave this empty than fill it with people we have not asked.
         </Note>
       ) : (
         <div

@@ -4,7 +4,7 @@ import { signOut } from '@/app/admin/actions';
 import { createClient } from '@/lib/auth/server';
 
 export const metadata: Metadata = {
-  title: 'Admin — D+D Collective',
+  title: 'Admin · D+D Collective',
   robots: { index: false, follow: false }
 };
 

@@ -178,8 +178,22 @@ mirrors the design system's components line-for-line.
 - Border-led, not shadow-led: one hairline, one 56x2px gradient rule. No
   shadows except the focus ring. No icons — the system ships none; use a
   label, a pill, a number, or a unicode arrow.
-- Sentence case. No emoji. Institutional "we", never "I". Interpuncts (·)
-  carry metadata.
+- Sentence case. No emoji. Institutional "we", never "I" - the site speaks for
+  a two-person foundation. First person singular appears only where a person
+  actually speaks: a Changemakers card, a signed note. Interpuncts (·) carry
+  metadata, including the separator in page titles.
+- **No em dashes anywhere a visitor reads.** A spaced hyphen ( - ) joins a
+  second thought, a colon introduces a list, or the sentence splits in two.
+  This is Michele's own habit and it overrides the "em dashes for the gloss"
+  line in readme.md, which described the internal brief rather than her
+  writing. Code comments are not visitor copy and may keep them.
+- Exclamation marks are allowed where warmth genuinely lands - an invitation,
+  a thank-you - and nowhere else. Roughly one per page, not one per paragraph.
+- No "not X but Y" constructions, and no "rather than" pairs. Say the thing,
+  then say the other thing in its own sentence.
+- American spelling: color, program, neighbor. The enum *values* in
+  lib/schemas.ts keep their original spelling (people-of-colour) because they
+  are wire values matched against stored rows; only the labels changed.
 - Logo artwork is raster, traced from screenshots — the .ai/.eps files never
   arrived. Replace `public/brand/*` when real vectors exist.
 

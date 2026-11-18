@@ -3,7 +3,7 @@ import { NextPage } from '@/components/next-page';
 import { Card, Note, Pill, SectionHeader, Tile } from '@/components/ds';
 import { levers, practices } from '@/content/how-we-work';
 
-export const metadata: Metadata = { title: 'How we work — D+D Collective' };
+export const metadata: Metadata = { title: 'How we work · D+D Collective' };
 
 export default function HowWeWorkPage() {
   return (
@@ -38,7 +38,7 @@ export default function HowWeWorkPage() {
       <div style={{ marginTop: 'var(--section-gap)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'var(--gap-cols)' }}>
         <Card title="The redemptive lens">
           <p style={{ margin: 0, fontSize: 'var(--fs-tile)', color: 'var(--text-body)' }}>
-            Strategy, operations and leadership are each read along the Praxis spectrum — exploitative, ethical,
+            Strategy, operations and leadership are each read along the Praxis spectrum of exploitative, ethical,
             redemptive.
           </p>
         </Card>

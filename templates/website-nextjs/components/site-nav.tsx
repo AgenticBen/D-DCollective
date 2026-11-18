@@ -24,7 +24,7 @@ export function SiteNav() {
       padding: '18px 28px', borderBottom: 'var(--border-1)', background: 'var(--surface-page)',
       flexWrap: 'wrap'
     }}>
-      <Link href="/" aria-label="D+D Collective — home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+      <Link href="/" aria-label="D+D Collective, home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
         <ThemedLogo kind="lockup" height={34} />
       </Link>
 

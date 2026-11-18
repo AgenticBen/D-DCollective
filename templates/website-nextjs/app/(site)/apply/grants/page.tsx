@@ -82,7 +82,7 @@ export default function GrantFormPage() {
         <p>Your answers are with us. Nothing else is needed from you now.</p>
         <p className="mt-4">
           We read every submission. We reply only where there is a fit, so no reply is not a verdict on your
-          work — it usually means our geography or our levers are wrong for it this year.
+          work. It usually just means our geography or our levers are wrong for it this year.
         </p>
       </Submitted>
     );
@@ -153,7 +153,7 @@ export default function GrantFormPage() {
             required
             errors={fieldErrors}
             options={[
-              { value: 'poc-led', label: 'Led by people of colour' },
+              { value: 'poc-led', label: 'Led by people of color' },
               { value: 'women-led', label: 'Women-led' },
               { value: 'neither', label: 'Neither' }
             ]}
@@ -194,7 +194,7 @@ export default function GrantFormPage() {
             errors={fieldErrors}
             options={[
               { value: 'women', label: 'Women' },
-              { value: 'people-of-colour', label: 'People of colour' },
+              { value: 'people-of-colour', label: 'People of color' },
               { value: 'blind-or-visually-impaired', label: 'People who are blind or visually impaired' },
               { value: 'children', label: 'Children' },
               { value: 'marginalized-communities', label: 'Marginalized communities' }

@@ -46,8 +46,10 @@ and unusually candid about constraints.
 - **Interpuncts carry structure.** Metadata and taxonomies are joined with ` · `: "Internal · Meeting prep",
   "POC · Male", "Direct · PRI", "Impact 35 · Business 35 · Risk 10 · Leadership 10 · Spiritual 10". Numbered
   items use the same separator: "01 · Scholarships & educational support".
-- **Em dashes for the gloss.** A heading is often followed by a small dash-led clarifier: "Operational
-  practices — how we work", "Leadership intent — recommend keeping internal".
+- **No em dashes in visitor copy.** The internal brief this system was built from used an em dash for
+  the gloss ("Operational practices — how we work"). The website does not: Michele never writes one, so
+  a spaced hyphen ( - ) joins a second thought and a colon introduces a list. Headings take their
+  clarifier after a comma or on its own line.
 - **Vocabulary to keep.** shalom · redemptive · changemakers · leadership pathways · levers · convene ·
   posture (concessionary / at market / above market) · faith-led vs. faith-integrated. "Redemptive investing"
   stays scoped to the investment portfolio and is not used as a general descriptor.
